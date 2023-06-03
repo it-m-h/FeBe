@@ -1,0 +1,63 @@
+  <nav class="">
+    <div class="nav-wrapper">
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a class="" href="/Home">Home</a></li>
+        {{#Rights 1}}
+          <li><a class="" href="/Admin">Admin</a></li>
+        {{/Rights}}
+        {{#Rights 5}}
+          <li><a class="" href="/User">User</a></li>
+        {{/Rights}}
+        {{#Rights 9}}
+          <li><a class="" href="/Guest">Guest</a></li>
+        {{/Rights}}
+        <li><a class="dropdown-trigger " href="#!" data-target="UseFeBe">UseFeBe<i class="material-icons right">arrow_drop_down</i></a></li>
+        {{#isLoggedIn}}
+          <li><a class="dropdown-trigger " href="#!" data-target="Account">Account<i class="material-icons right">arrow_drop_down</i></a></li>
+        {{/isLoggedIn}}
+      </ul>
+    </div>
+  </nav>
+
+  <ul class="sidenav" id="mobile-demo">
+    <li><a class="" href="/Home">Home</a></li>
+    {{#Rights 1}}
+      <li><a class="" href="/Admin">Admin</a></li>
+    {{/Rights}}
+    {{#Rights 5}}
+      <li><a class="" href="/User">User</a></li>
+    {{/Rights}}
+    {{#Rights 9}}
+      <li><a class="" href="/Guest">Guest</a></li>
+    {{/Rights}}
+    <li><a class="dropdown-trigger" href="#!" data-target="UseFeBeMobile">UseFeBe<i class="material-icons right">arrow_drop_down</i></a></li>
+    {{#isLoggedIn}}
+      <li><a class="dropdown-trigger" href="#!" data-target="AccountMobile">Account<i class="material-icons right">arrow_drop_down</i></a></li>
+    {{/isLoggedIn}}
+  </ul>
+
+<ul id="UseFeBe" class="dropdown-content">
+  <li><a class="black-text" href="/UseFeBe/CSS">CSS</a></li>
+  <li><a class="black-text" href="/UseFeBe/Rights">Rights</a></li>
+</ul>
+<ul id="UseFeBeMobile" class="dropdown-content"></ul>
+
+
+<ul id="Account" class="dropdown-content">
+  <li><a class="black-text" href="/Account/Account">Account</a></li>
+  <li><a class="black-text" href="/Account/Logout">Logout</a></li>
+</ul>
+<ul id="AccountMobile" class="dropdown-content"></ul>
+
+
+<script>
+  $('#UseFeBeMobile').html($('#UseFeBe').html());
+  $('#AccountMobile').html($('#UseFeBe').html());
+  
+  $(".dropdown-trigger").dropdown({
+    hover: true, // Öffnet das Dropdown-Menü beim Überfahren mit der Maus (Standard: false)
+    coverTrigger: true, // Das Dropdown-Menü wird nicht den Trigger vollständig abdecken (Standard: true)
+    constrainWidth: true // Das Dropdown-Menü wird nicht auf die Breite des Triggers beschränkt (Standard: true)
+  });
+</script>

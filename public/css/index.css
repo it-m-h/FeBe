@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+@import url(global.min.css);
+/* main breite definieren */
+
+html,
+body {
+    font-family: 'Ubuntu', arial, sans-serif;
+}
+
+.smalltime {
+    color: #FFFFFF;
+    text-shadow: 1px 3px 0 #969696, 1px 13px 5px #aba8a8;
+    margin-left: 5%;
+}
+
+
+
+@media only screen and (min-width: 0px) and (max-width: 600px) {
+    main {
+        width: 90%;
+        margin: auto;
+    }
+
+    .smalltime {
+        font-size: 4em;
+    }
+
+    header .parallax-container {
+        height: 25%;
+    }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 991px) {
+    main {
+        width: 90%;
+        margin: auto;
+    }
+
+    .smalltime {
+        font-size: 6em;
+    }
+
+    header .parallax-container {
+        height: 30%;
+    }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+    main {
+        width: 90%;
+        margin: auto;
+    }
+
+    .smalltime {
+        font-size: 8em;
+    }
+
+    header .parallax-container {
+        height: 40%;
+    }
+}
+
+@media only screen and (min-width: 1201px) {
+    main {
+        width: 90%;
+        margin: auto;
+    }
+
+    .smalltime {
+        font-size: 10em;
+    }
+
+    header .parallax-container {
+        height: 40%;
+    }
+}
+
+main{
+    margin-bottom: 150px;
+}
+nav {
+    position: sticky;
+    top: 0px;
+    z-index: 9;
+}
+
+footer {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+}
+
+
+h1 {
+    font-size: 2.5rem !important;
+}
+
+h2 {
+    font-size: 1.9rem !important;
+}
+
+h3 {
+    font-size: 1.6rem !important;
+}
+
+h4 {
+    font-size: 1.4rem !important;
+}
+
+h5 {
+    font-size: 1.2rem !important;
+}
+
+h6 {
+    font-size: 1rem !important;
+}
+
+.b1p {
+    border: 1px solid grey !important;
+
+}
+
+/* main ul li {
+    list-style-type: initial !important;
+    margin-left: 20px !important;
+} */
+
+main pre {
+    background-color: #f5f5f5 !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    padding: 5px !important;
+}
+

@@ -1,0 +1,47 @@
+<div id="cookie-banner" class="cookie-banner hide">
+    <p>
+        Wir verwenden Cookies (und andere ähnliche Technologien) für verschiedene Zwecke, einschließlich der Verbesserung Ihres Erlebnisses <br>
+        auf unserer Seite und für Anzeigen und Analysen. Klicken Sie auf "Alle akzeptieren", um diese Verwendungen zu akzeptieren. 
+    </p>
+    <button id="accept-cookies" class="accept-cookies">Alle akzeptieren</button>
+</div>
+<script>
+    const cookieBanner = document.getElementById("cookie-banner");
+    const acceptCookies = document.getElementById("accept-cookies");
+    const hideCookieBanner = () => cookieBanner.classList.add("hide");
+    acceptCookies.addEventListener("click", () => {
+        hideCookieBanner();
+        localStorage.setItem("cookieBannerDisplayed", "true");
+    });
+    setTimeout(() => {
+        if (!localStorage.getItem("cookieBannerDisplayed")) {
+            cookieBanner.classList.remove("hide");
+        }
+    }, 1000);
+</script>
+<style>
+    .cookie-banner {
+        background-color: #4f4f4f;
+        border-top: 1px solid #ccc;
+        bottom: 0;
+        font-size: 14px;
+        left: 0;
+        padding: 10px;
+        position: fixed;
+        text-align: center;
+        width: 100%;
+        z-index: 9999;
+        color: #fff;
+    }
+    .accept-cookies {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        cursor: pointer;
+        font-size: 14px;
+        margin-left: 10px;
+        padding: 5px 10px;
+        text-align: center;
+        text-decoration: none;
+    }
+</style>
