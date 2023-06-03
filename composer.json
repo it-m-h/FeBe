@@ -1,11 +1,12 @@
 {
     "name": "it-m-h/febe",
-    "description": "A lightweight PHP framework application for rapid development with front and backend",
+    "description": "A small lightweight PHP framework application for rapid development with front and backend",
     "keywords": [
         "microframework",
         "frontend",
         "backend",
-        "light"
+        "light",
+        "small"
     ],
     "homepage": "https://github.com/it-m-h/FeBe",
     "license": "AGPL-3.0",

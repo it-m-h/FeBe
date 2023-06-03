@@ -9,7 +9,7 @@ if (!isset($_SESSION['Account']))
 if (!isset($_SESSION['selectedAccount']))
     $_SESSION['selectedAccount'] = $_SESSION['Account'];
 
-$data = array();
+//$data = array();
 
 // ---------------------------------------------------------------
 // DEFINE constant Variables & LOAD Config
@@ -30,20 +30,6 @@ require BASEPATH.DS."config".DS.'router.php';
 
 use lib\Sites;
 use Steampixel\Route;
-
-// ---------------------------------------------------------------
-// LOAD LAYOUT
-// ---------------------------------------------------------------
-// Navigation load
-$Sites = new Sites('Nav');
-$data['nav'] = $Sites->html;
-// Footer load
-$Sites = new Sites('Footer');
-$data['footer'] = $Sites->html;
-// Header load
-$Sites = new Sites('Header');
-$data['header'] = $Sites->html;
-
 
 // ---------------------------------------------------------------
 // Run the router

@@ -7,9 +7,9 @@ use Steampixel\Route;
 // -----------------------------------------------
 // HOME
 // -----------------------------------------------
-Route::add('/', function () use ($data) {
-    global $data;
+Route::add('/', function () {
     $Sites = new Sites(null, null, 'Home');
+    $data = array();
     $data['main'] = $Sites->html;
     $index = new Template('index', $data);
     echo $index->html;
@@ -18,10 +18,11 @@ Route::add('/', function () use ($data) {
 // -----------------------------------------------
 // Account Logout
 // -----------------------------------------------
-Route::add('/Account/Logout', function () use ($data) {
+Route::add('/Account/Logout', function () {
     $_SESSION = array();
     session_destroy();
     $Sites = new Sites(null, null, 'Home');
+    $data = array();
     $data['main'] = $Sites->html;
     $index = new Template('index', $data);
     echo $index->html;
@@ -48,20 +49,23 @@ Route::add('/App/([a-zA-Z0-9]*)/([a-zA-Z0-9]*)/([a-zA-Z0-9]*)', function ($class
 // -----------------------------------------------
 // Frontend - Sites Routings
 // -----------------------------------------------
-Route::add('/([a-zA-Z0-9]*)', function ($file) use ($data) {
+Route::add('/([a-zA-Z0-9]*)', function ($file){
     $Sites = new Sites(null, null, $file);
+    $data = array();
     $data['main'] = $Sites->html;
     $index = new Template('index', $data);
     echo $index->html;
 }, ['get', 'post']);
-Route::add('/([a-zA-Z0-9]*)/([a-zA-Z0-9]*)', function ($folder, $file) use ($data) {
+Route::add('/([a-zA-Z0-9]*)/([a-zA-Z0-9]*)', function ($folder, $file){
     $Sites = new Sites($folder, null, $file);
+    $data = array();
     $data['main'] = $Sites->html;
     $index = new Template('index', $data);
     echo $index->html;
 }, ['get', 'post']);
-Route::add('/([a-zA-Z0-9]*)/([a-zA-Z0-9]*)/([a-zA-Z0-9]*)', function ($subfolder, $folder, $file) use ($data) {
+Route::add('/([a-zA-Z0-9]*)/([a-zA-Z0-9]*)/([a-zA-Z0-9]*)', function ($subfolder, $folder, $file) {
     $Sites = new Sites($folder, $subfolder, $file);
+    $data = array();
     $data['main'] = $Sites->html;
     $index = new Template('index', $data);
     echo $index->html;
