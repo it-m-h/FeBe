@@ -9,8 +9,6 @@ if (!isset($_SESSION['Account']))
 if (!isset($_SESSION['selectedAccount']))
     $_SESSION['selectedAccount'] = $_SESSION['Account'];
 
-//$data = array();
-
 // ---------------------------------------------------------------
 // DEFINE constant Variables & LOAD Config
 // ---------------------------------------------------------------
@@ -28,10 +26,8 @@ require BASEPATH.'vendor/autoload.php';
 // ---------------------------------------------------------------
 require BASEPATH.DS."config".DS.'router.php';
 
-use lib\Sites;
-use Steampixel\Route;
-
 // ---------------------------------------------------------------
 // Run the router
 // ---------------------------------------------------------------
+use Steampixel\Route;
 Route::run('/');
