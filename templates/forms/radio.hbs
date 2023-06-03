@@ -1,0 +1,11 @@
+
+<div class="{{fieldclass}}" style="margin-top: 1rem !important; margin-bottom: 1rem !important;">
+    {{#each elem}}
+        <div class="input-field {{class}}" style="height: 30px; margin-top: 0px;">
+            <label>
+                <input id="{{id}}" name="{{id}}" value="{{value}}" type="radio" {{checked}} />
+                <span>{{label}}</span>
+            </label>
+        </div>
+    {{/each}}
+</div>

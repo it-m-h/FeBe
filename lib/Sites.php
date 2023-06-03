@@ -5,8 +5,9 @@ namespace lib;
 use Parsedown;
 
 class Sites {
-    public $html = null;
+    public $html = '';
     public function __construct($folder = '', $subfolder = '',$file = 'Home') {
+        $this->html = '';
         if ($folder != '') {
             if($subfolder != ''){
                 $SitesDir = BASEPATH."Sites/".$folder."/".$subfolder."/"; 
@@ -16,8 +17,17 @@ class Sites {
         } else {
             $SitesDir = BASEPATH."Sites/";
         }
-        $this->html = '';
-        $this->html = $this->getFile($SitesDir.$file);
+        $this->html = $this->getFile($SitesDir.$file); 
+    }
+    public function getResponse(){
+        if ($this->html != '') {
+            $data = array();
+            $data['main'] = $this->html;
+            $index = new Template('index', $data);
+            return $index->html;
+        } else {
+            return Error::response(404);
+        }
     }
     public function getFile($file){
         $html = '';

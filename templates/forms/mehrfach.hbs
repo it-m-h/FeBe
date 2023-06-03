@@ -1,0 +1,12 @@
+
+<div class="{{fieldclass}}">
+    {{#if icon}}
+        {{{icon}}}
+    {{/if}}
+    <select id="{{id}}" name="{{id}}" {{more}}>
+        {{#each option}}
+            <option value="{{value}}" {{more}}>{{label}}</option>
+        {{/each}}
+    </select>
+    <label for=" {{id}}">{{label}}</label>
+</div>
