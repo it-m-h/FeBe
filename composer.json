@@ -1,0 +1,33 @@
+{
+    "name": "it-m-h/febe",
+    "description": "A lightweight PHP framework application for rapid development with front and backend",
+    "keywords": [
+        "microframework",
+        "frontend",
+        "backend",
+        "light"
+    ],
+    "homepage": "https://github.com/it-m-h/FeBe",
+    "license": "GNU Affero General Public License v3.0 ",
+    "authors": [
+        {
+            "name": "it-master",
+            "email": "info@it-master.ch",
+            "homepage": "http://www.it-master.ch/"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "vlucas/valitron": "^1.4",
+        "erusev/parsedown": "^1.7",
+        "steampixel/simple-php-router": "^0.7.1",
+        "scrivo/highlight.php": "v9.18.1.10",
+        "salesforce/handlebars-php": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "lib\\": "lib/"
+        }
+    }
+}
