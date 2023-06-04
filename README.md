@@ -16,10 +16,30 @@ Logik, Datenverarbeitung und Datenbankinteraktion. Das Back-End ist für die Ver
 Das PHP-Framework ist eine Sammlung von Bibliotheken, Werkzeugen und vorgefertigtem Code, die die Entwicklung von Webanwendungen mit PHP vereinfachen sollen. Es bietet eine Struktur und einen Satz von Regeln, um die Entwicklung effizienter, skalierbarer und wartbarer Anwendungen zu erleichtern. 
 
 # Installation:
+Composer wird benötigt, um die Abhängigkeiten zu installieren.
 
 ## mit Composer:
 ```bash
 composer create-project it-m-h/FeBe testFebe --stability=dev
+```
+
+## mit GIT:
+```bash
+git clone https://github.com/it-m-h/FeBe
+cd FeBe
+composer update
+```
+Danach in das Verzeichnis wechseln und .gitingore konfigurieren (data & sites & config ausschliessen)
+Update: damit neueste Version geholt wird
+```bash
+git pull 
+```
+
+## ZIP-Datei, Download von GitHub:
+ZIP-Datei herunterladen und entpacken.
+```bash
+cd goFolderFrom_FeBe
+composer update
 ```
 
 # Server - Konfiguration:
