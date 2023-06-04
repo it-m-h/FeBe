@@ -1,3 +1,4 @@
+
 <html lang="de-CH">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -15,16 +16,19 @@
     <title>FeBe 2023</title>
     <link rel="shortcut icon" href="/img/favicon.ico" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
-    <script src="/js/index.js"defer ></script>
-    <link rel="stylesheet" href="/css/index.css" />
+        <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+   
+
   <body>
-    {{> nav}}
-    {{> header}}
-    <main class="text-justify">{{{main}}}</main>
-    {{> footer}}
-    {{> cookie}}
+    
+      <span class="tooltipped" data-position="top" data-tooltip="I am a tooltip">Hover me!</span>
+       
+    <script>
+      $('.tooltipped').tooltip();
+    </script>
   </body>
 </html>

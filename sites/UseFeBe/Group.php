@@ -6,16 +6,6 @@ $Group = new Group(null);
 $Group = $Group->getGroups();
 $handlebars = new Handlebars();
 
-/* echo '<pre>';
-print_r($Group);
-echo '</pre>'; */
-/* 
-echo '<form id="GroupForm" action="/App/Group/Save" method="post" class="row">';
-$Group = new App\Group\Group(null);
-$html = $Group->getFormFields();
-echo $html;
-echo '</form>'; 
-*/
 ?>
 <h1>Sites: SQLITE3 - GROUP with AJAX to the App/Group</h1>
 <div class="row">
@@ -118,7 +108,6 @@ echo '</form>';
         });
     });
 
-    // status click toggleStatus
     $('.status').click(function(){
 
         abfrage = confirm("Benutzer aktivieren/deaktivieren?");
@@ -144,7 +133,6 @@ echo '</form>';
         }
     });
 
-    /* #clear click event -> form leeren */
     $('#clear').click(function(){
         $('#GroupForm').find('input').each(function(){
             var value = $(this).attr('value');

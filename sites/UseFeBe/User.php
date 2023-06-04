@@ -9,16 +9,6 @@ $handlebars = new Handlebars();
 
 $db = new Database();
 $groups = $db->getArray('SELECT * FROM groups');
-/* echo '<pre>';
-print_r($groups);
-echo '</pre>'; */
-/* 
-echo '<form id="UserForm" action="/App/User/Save" method="post" class="row">';
-$user = new App\User\User(null);
-$html = $user->getFormFields();
-echo $html;
-echo '</form>'; 
-*/
 ?>
 <h1>Sites: SQLITE3 - User with AJAX to the App/User</h1>
 <div class="row">
@@ -128,7 +118,6 @@ echo '</form>';
     }
 </style>
 <script>
-    /*  .edit click */
     $('.edit').click(function(){
         var id = $(this).parent().attr('data-id');
         $.ajax({
@@ -161,7 +150,6 @@ echo '</form>';
         });
     });
 
-    // status click toggleUserStatus
     $('.status').click(function(){
 
         abfrage = confirm("Benutzer aktivieren/deaktivieren?");
@@ -187,7 +175,6 @@ echo '</form>';
         }
     });
 
-    /* #clear click event -> form leeren */
     $('#clear').click(function(){
         $('#UserForm').find('input').each(function(){
             var value = $(this).attr('value');

@@ -1,6 +1,9 @@
 # FeBe
-FeBe - Front-End, Back-End PHP Framework.
+FeBe - Front-End, Back-End, MVC, PHP - Framework.
 Ist in Moment in der Entwicklung .....
+
+![FeBe - Framework](/public/img/febe/001.jpg "FeBe - Framework")
+
 
 ### Front-End
 Implementierung von Funktionen und die Darstellung von Inhalten, mit HTML, CSS, JavaScript. Es wird das Materialize CSS verwendet, JQuery sowie JS-Handlebars und JS-Code Highlight.
