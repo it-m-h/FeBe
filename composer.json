@@ -22,7 +22,7 @@
         "vlucas/valitron": "^1.4",
         "erusev/parsedown": "^1.7",
         "steampixel/simple-php-router": "^0.7.1",
-        "scrivo/highlight.php": "v9.18.1.10",
+        "scrivo/highlight.php": "^9.18.1.10",
         "salesforce/handlebars-php": "^3.0"
     },
     "autoload": {
