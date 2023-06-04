@@ -9,7 +9,7 @@
         "small"
     ],
     "homepage": "https://github.com/it-m-h/FeBe",
-    "license": "AGPL-3.0",
+    "license": "AGPL-3.0-or-later",
     "authors": [
         {
             "name": "it-master",
