@@ -1,53 +1,55 @@
 # FeBe
 FeBe - Front-End, Back-End, MVC, PHP - Framework.
-Ist in Moment in der Entwicklung .....
+Further information can be found in the "UseFeBe" menu in FeBe.
 
 ![FeBe - Framework](/public/img/febe/001.jpg "FeBe - Framework")
 
 
-### Front-End
-Implementierung von Funktionen und die Darstellung von Inhalten, mit HTML, CSS, JavaScript. Es wird das Materialize CSS verwendet, JQuery sowie JS-Handlebars und JS-Code Highlight.
+### FrontEnd
+Implementation of functions and presentation of content, with HTML, CSS, JavaScript. Materialize CSS is used, 
+JQuery as well as JS handlebars and JS code highlight.
 
-### Back-End
-Logik, Datenverarbeitung und Datenbankinteraktion. Das Back-End ist für die Verarbeitung von Benutzeranfragen, die Bereitstellung von Daten und die Kommunikation mit dem Front-End verantwortlich. Es werden verschiedene Cpmposer-Packages verwendet und SQLITE3. 
-Über PHP-PDO wird die Datenbank angesprochen. Somit ist es möglich, auch andere Datenbanken zu verwenden. Die Templates werden mit PHP - Handlebars gerendert.
+### BackEnd
+Logic, data processing and database interaction. The backend is responsible for processing user requests, providing data, and communicating with the frontend. Different Cpmposer packages are used and SQLITE3. The database connection is established using PHP-PDO. It is therefore possible to use other databases as well. The templates are rendered with PHP handlebars.
 
 ### FeBe - Framework
-Das PHP-Framework ist eine Sammlung von Bibliotheken, Werkzeugen und vorgefertigtem Code, die die Entwicklung von Webanwendungen mit PHP vereinfachen sollen. Es bietet eine Struktur und einen Satz von Regeln, um die Entwicklung effizienter, skalierbarer und wartbarer Anwendungen zu erleichtern. 
+The PHP framework is a collection of libraries, tools, and pre-built code designed to simplify the development of web applications using PHP. It provides a structure and set of rules to facilitate the development of efficient, scalable, and maintainable applications.
 
 # Installation:
-Composer wird benötigt, um die Abhängigkeiten zu installieren.
+Composer is required to install the dependencies.
 
-## mit Composer:
+## Composer:
 ```bash
 composer create-project it-m-h/FeBe testFebe --stability=dev
 ```
 
-## mit GIT:
+## GIT:
 ```bash
 git clone https://github.com/it-m-h/FeBe
 cd FeBe
 composer update
 ```
-Danach in das Verzeichnis wechseln und .gitingore konfigurieren (data & sites & config ausschliessen)
-Update: damit neueste Version geholt wird
+
+After that, navigate to the directory and configure the .gitignore file (exclude data, sites, and config).
+Update: To fetch the latest version.
 ```bash
 git pull 
 ```
 
-## ZIP-Datei, Download von GitHub:
-ZIP-Datei herunterladen und entpacken.
+## ZIP-Datei, Download from GitHub:
+Download the ZIP file and extract its contents.
 ```bash
-cd goFolderFrom_FeBe
+cd goToFolderFrom_FeBe
 composer update
 ```
 
-# Server - Konfiguration:
+# Server - Configuration:
 
 ## FeBe vHost in XAMPP
 PHP : C:\xampp\php\php.ini
 
-### folgende PHP-Module müssen aktiviert sein:
+### The following PHP modules need to be enabled:
+
 - extension=pdo_sqlite
 - extension=sqlite3
 - extension=zip
@@ -55,16 +57,16 @@ PHP : C:\xampp\php\php.ini
 ## FeBe vHost in XAMPP
 PHP : C:\xampp\php\php.ini
 
-### rudimentäre Konfig, zum Testen
+### rudimentary configuration for testing purposes:
 ```
 LISTEN 55001
 <VirtualHost *:55001>
     DocumentRoot "C:\xampp\htdocs\testFebe\public"
 </VirtualHost>
 ```
-Aufruf im Browser: http://localhost:55001/
+Browser: http://localhost:55001/
 
-### opimalere Konfig, ev. auch über DNS - Name:  Seite1.local
+### Optimal configuration, possibly using a DNS name: Page1.local.
 vHosts : C:\xampp\apache\conf\extra\httpd-vhosts.conf
 ```
 <VirtualHost *:80>
@@ -80,10 +82,10 @@ vHosts : C:\xampp\apache\conf\extra\httpd-vhosts.conf
 </VirtualHost>
 ```
 
-Aufruf im Browser: http://Seite1.local/
+Browser: http://Seite1.local/
 
 ### Info: 
-- Nach dem Ändern der httpd.conf muss der Apache-Server neu gestartet werden.
-- Die Datei httpd.conf muss eventuell als Administrator geöffnet werden.
-- die httpd-vhosts.conf wäre natürlich besser geeignet für Virtuelle Hots, aber die httpd.conf ist die Hauptdatei.
-- im Windows kann auch mit der Hosts-Datei gearbeitet werden, um DNS-Namen zu vergeben. (für den lokalen Rechner), die Hosts-Datei befindet sich unter: C:\Windows\System32\drivers\etc\hosts
+- After modifying the httpd.conf file, the Apache server needs to be restarted.
+- The httpd.conf file may need to be opened as an administrator.
+- The httpd-vhosts.conf file is more suitable for virtual hosts, but the httpd.conf file is the main configuration file.
+- In Windows, the hosts file can also be used to assign DNS names (for the local machine). The hosts file is located at: C:\Windows\System32\drivers\etc\hosts.
