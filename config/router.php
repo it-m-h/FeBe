@@ -1,6 +1,6 @@
 <?php
+use lib\Response;
 use lib\Sites;
-use lib\Error;
 use Steampixel\Route;
 
 // -----------------------------------------------
@@ -57,5 +57,6 @@ Route::add('/([a-zA-Z0-9]*)/([a-zA-Z0-9]*)/([a-zA-Z0-9]*)', function ($subfolder
 // Site Routings :: ANY
 // -----------------------------------------------
 Route::pathNotFound(function ($path) {
-    echo Error::response(404);
+    //echo Error::response(404);
+    Response::error(404);
 });

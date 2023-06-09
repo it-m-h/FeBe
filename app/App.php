@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace App;
+use lib\Response;
 
 abstract class App {
 
@@ -17,15 +18,9 @@ abstract class App {
         }
     }
     public static function MethodError($method = '') {
-        http_response_code(404);
-        header("HTTP/1.0 404 Not Found");
-        $error = "<span>Error: </span><b>The server does not support the functionality required to fulfill the request.</b>";
-        include BASEPATH.DS.'error'.DS.'404.php';
+        Response::error(404);
     }
     public static function ClassError($class = '') {
-        http_response_code(404);
-        header("HTTP/1.0 404 Not Found");
-        $error = "<span>Error: </span><b>The server does not support the functionality required to fulfill the request.</b>";
-        include BASEPATH.DS.'error'.DS.'404.php';
+        Response::error(404);
     }
 }

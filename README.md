@@ -70,10 +70,10 @@ Browser: http://localhost:55001/
 vHosts : C:\xampp\apache\conf\extra\httpd-vhosts.conf
 ```
 <VirtualHost *:80>
-    Servername Seite1.local
+    Servername Page1.local
     DocumentRoot "C:\xampp\htdocs\FeBe\public"
-    ErrorLog "logs/Seite1.local-error.log"
-    CustomLog "logs/Seite1.local-access.log" common
+    ErrorLog "logs/Page1.local-error.log"
+    CustomLog "logs/Page1.local-access.log" common
     <Directory "C:\xampp\htdocs\FeBe\public">
         Options Indexes FollowSymLinks Includes ExecCGI
         AllowOverride All
@@ -82,7 +82,7 @@ vHosts : C:\xampp\apache\conf\extra\httpd-vhosts.conf
 </VirtualHost>
 ```
 
-Browser: http://Seite1.local/
+Browser: http://Page1.local/
 
 ### Info: 
 - After modifying the httpd.conf file, the Apache server needs to be restarted.

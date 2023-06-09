@@ -9,10 +9,10 @@ class Database {
     public $db;
     public $init;
 
-    public function __construct($method = '', $param = '') {
+    public function __construct($method = '', $param = '') {        
         $this->db = new \PDO('sqlite:'.BASEPATH.'data/FeBe.sqlite3');
+        //$this->db = new \PDO('mysql:host=localhost;dbname=FeBe', 'root', '');
     }
-
     public function getArray($sql, $bind = null) {
         try {
             $stmt = $this->db->prepare($sql);
