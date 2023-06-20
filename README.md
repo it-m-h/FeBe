@@ -36,6 +36,13 @@ Update: To fetch the latest version.
 git pull 
 ```
 
+### Tags
+```bash
+git tag
+git tag 1.0.3
+git push --tags
+```
+
 ## ZIP-Datei, Download from GitHub:
 Download the ZIP file and extract its contents.
 ```bash
