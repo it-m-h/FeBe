@@ -1,4 +1,7 @@
 <?php
+if (!isset($_SESSION['Rights']) || $_SESSION['Rights'] != 1)
+    header('Location: /');
+    
 use App\User\User;
 use Handlebars\Handlebars;
 use lib\Database;

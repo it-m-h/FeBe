@@ -89,3 +89,25 @@ Browser: http://Page1.local/
 - The httpd.conf file may need to be opened as an administrator.
 - The httpd-vhosts.conf file is more suitable for virtual hosts, but the httpd.conf file is the main configuration file.
 - In Windows, the hosts file can also be used to assign DNS names (for the local machine). The hosts file is located at: C:\Windows\System32\drivers\etc\hosts.
+
+
+# PHPUnit - Testing
+```
+composer require --dev phpunit/phpunit
+composer remove --dev phpunit/phpunit
+```
+
+## Test - PHP - Files
+```
+class MyUserTest extends PHPUnit\Framework\TestCase
+{
+   public function testHome()
+    {
+        
+    }
+}
+```
+## Test run in Konsole
+```
+php vendor/bin/phpunit tests/TestUser.php --colors
+```

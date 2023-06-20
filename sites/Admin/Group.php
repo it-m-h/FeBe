@@ -1,4 +1,6 @@
 <?php
+if (!isset($_SESSION['Rights']) || $_SESSION['Rights'] !=1 ) header('Location: /');
+
 use App\Group\Group;
 use Handlebars\Handlebars;
 

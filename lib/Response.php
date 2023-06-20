@@ -26,4 +26,8 @@ abstract class Response {
         $error = "<span>Error: </span><b>The server does not support the functionality required to fulfill the request.</b>";
         include BASEPATH.DS.'error'.DS.$code.'.php';
     }
+    
+    public static function sanitize_output($buffer){
+        echo $buffer . "<!-- Sanitized -->";
+    }
 }

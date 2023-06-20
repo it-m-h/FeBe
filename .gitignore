@@ -2,8 +2,8 @@
 .vscode
 .idea/
 .phpunit.result.cache
-composer.phar
-composer.lock
+auth.json
+composer.*
 /vendor/
 /temp/
 /_SASS/

@@ -11,6 +11,8 @@ echo '</code></pre>';
 
 echo '<h3>PHP - Session</h3>';
 echo '<pre><code class="lang:array hljs">';
+// php sessionID ausgeben
+echo 'Session ID: '.session_id().'<br><br>';
 print_r($_SESSION);
 echo '</code></pre>';
 

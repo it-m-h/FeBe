@@ -1,4 +1,5 @@
 <?php
+use lib\Auth;
 use lib\Response;
 use lib\Sites;
 use Steampixel\Route;
@@ -12,14 +13,26 @@ Route::add('/', function () {
 }, ['get']);
 
 // -----------------------------------------------
-// Account Logout
+// Account Login & Logout
 // -----------------------------------------------
 Route::add('/Account/Logout', function () {
-    $_SESSION = array();
-    session_destroy();
-    $Sites = new Sites(null, null, 'Home');
+    Auth::SessionRegenerate();
+    header('Location: /');
+}, ['get']);
+Route::add('/Account/Login', function () {
+    $file = 'Login';
+    $Sites = new Sites(null, null, $file);
     echo $Sites->getResponse();
 }, ['get']);
+Route::add('/Account/check', function () {
+    $loginname = $_POST['name'];
+    $password = sha1($_POST['password']);
+    if(Auth::chkLogin($loginname, $password)){
+        header('Location: /Account/Account');
+    } else {
+        header('Location: /Account/Login');
+    }
+}, ['post']);
 
 // -----------------------------------------------
 // Backend - APP - Router

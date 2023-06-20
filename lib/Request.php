@@ -50,4 +50,12 @@ abstract class Request {
         }
         return $info;
     }
+    public static function checkCountry() {
+        $country = $_SESSION['client']['reverse_lookup']['country_code'];
+        $allow = $_SESSION['settings']['CODE'];
+        if (stripos($allow, $country) == false) {
+            Response::error(404);
+            exit;
+        }
+    }
 }

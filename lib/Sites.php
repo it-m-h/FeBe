@@ -23,6 +23,8 @@ class Sites {
         if ($this->html != '') {
             $data = array();
             $data['main'] = $this->html;
+            $data['session'] = $_SESSION;
+            //echo '<pre>'.print_r($data).'</pre>';
             $index = new Template('index', $data);
             return $index->html;
         } else {

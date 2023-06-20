@@ -7,11 +7,48 @@ namespace lib;
 class Database {
 
     public $db;
+    public $file;
     public $init;
 
-    public function __construct($method = '', $param = '') {        
+    public function __construct($method = '', $param = '') {    
+        $this->checkDBSqlite3(BASEPATH.'data/FeBe.sqlite3'); 
         $this->db = new \PDO('sqlite:'.BASEPATH.'data/FeBe.sqlite3');
+        if ($method != '') {
+            $this->$method($param);
+        }
         //$this->db = new \PDO('mysql:host=localhost;dbname=FeBe', 'root', '');
+    }
+    // check if database exists
+    public function checkDBSqlite3($file) {
+        if (!file_exists($file)) {
+            $sql = file_get_contents(BASEPATH.'data/SQLITE3.sql');
+            $db = new \PDO('sqlite:'.$file);
+            $db->exec($sql);
+            $db = null;
+        } 
+    }
+    public function setSettingsDefine() {
+        $sql = "SELECT * FROM settings";
+        $result = $this->getArray($sql);
+        foreach ($result as $key => $value) {
+            define($value['settings_name'], $value['settings_value']);
+        }
+    }
+    public function getSettings($param = '') {
+        $result = array();
+        $return = array();
+        if ($param != '') {
+            $sql = "SELECT * FROM settings WHERE settings_name = :name";
+            $bind = array(':name' => $param);
+            $result = $this->getArray($sql, $bind);
+        }else{
+            $sql = "SELECT * FROM settings";
+            $result = $this->getArray($sql);
+        }
+        foreach ($result as $key => $value) {
+            $return[$value['settings_name']] = $value['settings_value'];
+        }
+        return $return;
     }
     public function getArray($sql, $bind = null) {
         try {

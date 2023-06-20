@@ -8,7 +8,7 @@
     height: 46px;
     padding: 10px 0 0;
     position: relative;
-    margin: 0 auto;
+    margin: 0 10 auto;
     transition: all 0.2s ease-in-out;
     cursor: pointer;
     box-sizing: border-box;
@@ -27,6 +27,7 @@
     position: relative;
     top: -18px;
     display: inline-block;
+    width: max-content;
 }
 .fi:before,
 .fi:after {
