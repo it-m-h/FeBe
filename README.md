@@ -93,11 +93,23 @@ Browser: http://Page1.local/
 ## FeBe vHost in LAP (LINUX - Apache - PHP)
 ```
 sudo -i
+
 apt install apache2
 apt install php
 apt install php-pdo
+apt install php-zip
 a2enmod rewrite
 service apache2 restart
+
+cd /var/www
+wget https://github.com/it-m-h/FeBe/archive/refs/heads/main.zip
+unzip main.zip
+mv FeBe-main FeBe
+cd FeBe
+composer update
+chown -R www-data:www-data /var/www/FeBe
+chgrp -R www-data /var/www/FeBe
+
 ```
 ### apache2.conf
 ```
