@@ -104,12 +104,8 @@ service apache2 restart
 <VirtualHost *:80>
     ServerAdmin webmaster@localhost
     DocumentRoot "/var/www/html/FeBe/public"
-    ErrorLog "/var/www/html/FeBe/logs/Page1.local-error.log"
-    CustomLog "/var/www/html/FeBe/logs/Page1.local-access.log" common
     <Directory "/var/www/html/FeBe/public">
-        Options Indexes FollowSymLinks Includes ExecCGI
         AllowOverride All
-        Require all granted
     </Directory>
 ```
 ### php.ini
