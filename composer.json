@@ -33,16 +33,6 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/it-m-h/tree.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/it-m-h/csv.git"
-        }
-    ],
     "require-dev": {
         "phpunit/phpunit": "^10.2"
     }
