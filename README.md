@@ -36,13 +36,6 @@ Update: To fetch the latest version.
 git pull 
 ```
 
-### Tags
-```bash
-git tag
-git tag 1.0.3
-git push --tags
-```
-
 ## ZIP-Datei, Download from GitHub:
 Download the ZIP file and extract its contents.
 ```bash
@@ -96,6 +89,33 @@ Browser: http://Page1.local/
 - The httpd.conf file may need to be opened as an administrator.
 - The httpd-vhosts.conf file is more suitable for virtual hosts, but the httpd.conf file is the main configuration file.
 - In Windows, the hosts file can also be used to assign DNS names (for the local machine). The hosts file is located at: C:\Windows\System32\drivers\etc\hosts.
+
+## FeBe vHost in LAP (LINUX - Apache - PHP)
+```
+sudo -i
+apt install apache2
+apt install php
+apt install php-pdo
+a2enmod rewrite
+service apache2 restart
+```
+### apache2.conf
+```
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    DocumentRoot "/var/www/html/FeBe/public"
+    ErrorLog "/var/www/html/FeBe/logs/Page1.local-error.log"
+    CustomLog "/var/www/html/FeBe/logs/Page1.local-access.log" common
+    <Directory "/var/www/html/FeBe/public">
+        Options Indexes FollowSymLinks Includes ExecCGI
+        AllowOverride All
+        Require all granted
+    </Directory>
+```
+### php.ini
+```
+extension=pdo_sqlite
+```
 
 
 # PHPUnit - Testing
