@@ -111,7 +111,11 @@ chown -R www-data:www-data /var/www/FeBe
 chgrp -R www-data /var/www/FeBe
 
 ```
-### apache2.conf
+### Apache - Configuration
+
+```
+nano /etc/apache2/sites-available/000-default.conf
+```
 ```
 <VirtualHost *:80>
     ServerAdmin webmaster@localhost
@@ -119,6 +123,7 @@ chgrp -R www-data /var/www/FeBe
     <Directory "/var/www/html/FeBe/public">
         AllowOverride All
     </Directory>
+</VirtualHost>
 ```
 ### php.ini
 ```
