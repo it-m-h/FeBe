@@ -8,14 +8,14 @@ class Sites {
     public $html = '';
     public function __construct($folder = '', $subfolder = '',$file = 'Home') {
         $this->html = '';
-        if ($folder != '') {
-            if($subfolder != ''){
-                $SitesDir = BASEPATH."Sites/".$folder."/".$subfolder."/"; 
+        if ($folder != '' OR $folder != null) {
+            if($subfolder != '' OR $subfolder != null){
+                $SitesDir = BASEPATH."sites/".$folder."/".$subfolder."/"; 
             }else{
-                $SitesDir = BASEPATH."Sites/".$folder."/";
+                $SitesDir = BASEPATH."sites/".$folder."/";
             }
         } else {
-            $SitesDir = BASEPATH."Sites/";
+            $SitesDir = BASEPATH."sites/";
         }
         $this->html = $this->getFile($SitesDir.$file); 
     }
