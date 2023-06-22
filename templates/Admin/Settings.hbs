@@ -1,0 +1,143 @@
+<h3>Settings</h3>
+
+
+<ul class="collapsible">
+    {{#each .}}
+        <li>
+            <div class="collapsible-header"><i class="material-icons">menue</i>{{@key}}</div>
+            <div class="collapsible-body grey lighten-2" >
+
+                <div class="row">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="center w10">ID</th>
+                                <th class="w30">Settings Name</th>
+                                <th class="center w10"></th>                                <th>Settings Value</th>
+                                
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each .}}
+                                <tr data-id="{{settings_id}}">
+                                    <td class="center">{{settings_id}}</td>
+                                    <td width="20px">{{settings_name}}</td>
+                                    <td class="center">
+                                        <span data-id="{{settings_id}}">
+                                            <a href="!#" class="edit edit_{{settings_id}} btn waves-effect waves-light grey white-text">
+                                                <i class="material-icons white-text">edit</i>
+                                            </a>
+                                             <a href="!#" class="save save_{{settings_id}} btn waves-effect waves-light green white-text">
+                                                <i class="material-icons white-text">save</i>
+                                            </a>
+                                        </span>
+                                    </td>
+                                    <td class="value_{{settings_id}}">{{settings_value}}</td>
+                                    
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </li>
+    {{/each}}
+
+</ul>
+
+
+<script>
+
+    var id=0;
+    var value = '';
+    $('.save').hide();
+
+    $('.edit').click(function (e) {
+        e.preventDefault();
+        $(this).hide();
+        id = $(this).parent().attr('data-id');
+        value = $('.value_' + id).html();
+        $('.value_' + id).html('<input type="text" class="inputField" name="value" id="xxx" value="'+value+'">');
+        $('#xxx').focus();
+    });
+
+    $(document).on('change', '#xxx', function () {
+        tmp = $(this).val();
+        $('.save_'+id).show();
+    });
+
+    $(document).on('keyup', '#xxx', function () {
+        var tmp = $(this).val();
+        if (tmp == value) {
+            $('.save_'+id).hide();
+        } else {
+            $('.save_'+id).show();
+        }
+    });
+ 
+    $(document).on('focusout', '#xxx', function () {
+        var tmp = $(this).val();
+        if (tmp == value) {
+            $('.save').hide();
+            $('.edit').show();
+            $('.value_' + id).html(value);
+        } else {
+            //M.toast({html: 'Please save your changes!', classes: 'red'});
+            value = $('#xxx').val();
+            $('.save').hide();
+            $('.edit').show();
+            $('.value_' + id).html(value);
+            // updateSettings
+            $.ajax({
+                url: '/App/Settings/updateSettings',
+                type: 'POST',
+                data: {settings_id: id, settings_value: value},
+                success: function (data) {
+                    if (data == '1') {
+                        M.toast({html: 'Settings updated!', classes: 'green'});
+                    } else {
+                        M.toast({html: 'Error!', classes: 'red'});
+                    }
+                }
+            });
+        }
+    });
+
+    $(document).keypress(function(event) {
+        if (event.which === 13) {
+            var tmp = $(this).val();
+            if (tmp == value) {
+                $('.save').hide();
+                $('.edit').show();
+                $('.value_' + id).html(value);
+            } else {
+                //M.toast({html: 'Please save your changes!', classes: 'red'});
+                value = $('#xxx').val();
+                $('.save').hide();
+                $('.edit').show();
+                $('.value_' + id).html(value);
+                // updateSettings
+                $.ajax({
+                    url: '/App/Settings/updateSettings',
+                    type: 'POST',
+                    data: {settings_id: id, settings_value: value},
+                    success: function (data) {
+                        if (data == '1') {
+                            M.toast({html: 'Settings updated!', classes: 'green'});
+                        } else {
+                            M.toast({html: 'Error!', classes: 'red'});
+                        }
+                    }
+                });
+            }
+        }
+    });
+
+    $('.save').click(function (e) {
+        e.preventDefault();
+    });
+    
+</script>
+
