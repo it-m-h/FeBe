@@ -2,7 +2,7 @@
 // ---------------------------------------------------------------
 // DEBUG - show Errors true or false
 // ---------------------------------------------------------------
-define('DEBUG', false);
+define('DEBUG', true);
 if (DEBUG) {
     error_reporting(E_ALL);
     ini_set("display_errors", 1);
@@ -35,11 +35,12 @@ define('DURATION', 600);
 
 
 // ---------------------------------------------------------------
-// CONFIG - DATABASE (coming soon)
+// CONFIG - DATABASE (comming soon)
 // ---------------------------------------------------------------
 // SQLITE3 - DATABASE   
 // define('DB_FILE', BASEPATH.'data/FeBe.sqlite3');
-// mysql - DATABASE
+
+// mysql - DATABASE 
 /* 
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'febe');
