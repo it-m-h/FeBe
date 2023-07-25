@@ -49,11 +49,9 @@ use lib\Response;
 if(isset($_SESSION['settings']['RESPONSECLEAR']) && $_SESSION['settings']['RESPONSECLEAR'] == 1){
     ob_clean();
     ob_start();
-    
     $html = ob_get_contents();
     Response::sanitize_output($html);
     ob_end_clean();
-
     Route::run('/');
 }else{
     Route::run('/');

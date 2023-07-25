@@ -1,5 +1,11 @@
 <h1>Session</h1>
 
+Mit PHP kann z.B. ein Aufruf der Seite verhindert werden, wenn der User nicht eingeloggt ist.
+<pre>
+    if (!isset($_SESSION['Rights']))
+        header('Location: /');
+</pre>
+
 <?php
 
 // alle eigenen DEFINED ausgeben

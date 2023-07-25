@@ -2,8 +2,8 @@
 // ---------------------------------------------------------------
 // DEBUG - show Errors true or false
 // ---------------------------------------------------------------
-define('DEBUG', true);
-if (DEBUG == true) {
+define('DEBUG', false);
+if (DEBUG) {
     error_reporting(E_ALL);
     ini_set("display_errors", 1);
 } else {
@@ -29,14 +29,17 @@ setlocale(LC_TIME, 'de_CH.utf8', 'de_CH', 'deu_ch', 'Swiss');
 define('DURATION', 600);
 
 // ---------------------------------------------------------------
-// CONFIG - FILES & FOLDERS
+// CONFIG - FILES & FOLDERS (coming soon)
 // ---------------------------------------------------------------
 // define('FOLDER', 'public/Files');
 
 
 // ---------------------------------------------------------------
-// CONFIG - DATABASE
+// CONFIG - DATABASE (coming soon)
 // ---------------------------------------------------------------
+// SQLITE3 - DATABASE   
+// define('DB_FILE', BASEPATH.'data/FeBe.sqlite3');
+// mysql - DATABASE
 /* 
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'febe');
@@ -45,11 +48,13 @@ define('DB_PASS', '');
 */
 
 // ---------------------------------------------------------------
-// CONFIG - CSV
+// CONFIG - CSV (coming soon)
 // ---------------------------------------------------------------
-/* define('USERS', BASEPATH.'Data/users.csv');
+/* 
+define('USERS', BASEPATH.'Data/users.csv');
 define('GROUPS', BASEPATH.'Data/groups.csv');
 define('CSV_DELIMITER', ';'); // tab = \t
 define('CSV_NEWLINE', "\r\n");
-define('HEADERLINE', true); */
+define('HEADERLINE', true); 
+*/
 

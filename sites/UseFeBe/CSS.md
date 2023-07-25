@@ -17,3 +17,6 @@ https://handlebarsjs.com/
 ## salesforce/handlebars-php
 https://github.com/salesforce/handlebars-php
 
+# INFO
+MD - Dateien können immer angezeigt werden, auch ohne Login.
+

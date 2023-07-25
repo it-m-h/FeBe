@@ -1,24 +1,29 @@
-<html lang="de-CH">
+<html lang="{{session.settings.LANG}}">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="robots" content="index, follow" />
-    <meta name="revisit-after" content="10 days" />
-    <meta name="description" content="FeBe 2023" />
-    <meta name="keywords" content="PHP, Framework, Login, Template" />
-    <meta name="language" content="German" />
-    <meta name="title" content="FeBe 2023" />
-    <meta name="author" content="IT-Master Heizmann">
-    <meta name="publisher" content="IT-Master Heizmann">
-    <meta name="copyright" content="IT-Master Heizmann">
-    <title>FeBe 2023</title>
+    <meta http-equiv="X-UA-Compatible" content="{{session.settings.IE}}" />
+    <meta name="viewport" content="{{session.settings.VIEWPORT}}" />
+    <meta http-equiv="Content-Type" content="{{session.settings.CONTENT_TYPE}}" />
+    <meta name="msapplication-config" content="/browserconfig.xml"/>
+    <meta name="robots" content="{{session.settings.ROBOTS}}" />
+    <meta name="revisit-after" content="{{session.settings.ROBOTS_REVISIT}}" />
+    <meta name="language" content="{{session.settings.LANGUAGE}}" />
+    <meta name="title" content="{{session.settings.APPNAME}}" />
+    <meta name="theme-color" content="{{session.settings.THEME_COLOR}}">
+    <meta name="apple-mobile-web-app-capable" content="{{session.settings.MOBILE}}">
+    <meta name="apple-mobile-web-app-status-bar-style" content="{{session.settings.THEME_COLOR}}">
+    <title>{{session.settings.TITLE}}</title>
+    <meta name="keywords" content="{{session.settings.KEYWORDS}}" />
+    <meta name="description" content="{{session.settings.DESCRIPTION}}" />
+    <meta name="author" content="{{session.settings.AUTHOR}}">
+    <meta name="publisher" content="{{session.settings.PUBLISHER}}">
+    <meta name="copyright" content="{{session.settings.COPYRIGHT}}">
     <link rel="shortcut icon" href="/icon/favicon.ico" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
     <script src="/js/index.js"defer ></script>
+    <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" href="/css/index.css" />
   <body>
     {{> Nav}}

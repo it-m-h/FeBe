@@ -2,8 +2,15 @@
     <div class="nav-wrapper">
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <ul class="right hide-on-med-and-down">
-        <li><a class="" href="/Home"><i class="material-icons" style="display: inline-block;vertical-align: bottom;">home</i>Home</a></li>
-        <li><a class="dropdown-trigger " href="#!" data-target="UseFeBe">UseFeBe<i class="material-icons right">arrow_drop_down</i></a></li>
+        <li>
+          <a class="" href="/Home">
+            <i class="material-icons" style="display: inline-block;vertical-align: bottom; margin-right: 5px;">home</i>
+            Home
+          </a>
+        </li>
+        {{#isLoggedIn}}
+          <li><a class="dropdown-trigger " href="#!" data-target="UseFeBe">UseFeBe<i class="material-icons right">arrow_drop_down</i></a></li>
+        {{/isLoggedIn}}
         {{#Rights 1}}
           <li><a class="" href="/Admin/System">System</a></li>
           <li><a class="dropdown-trigger " href="#!" data-target="AdminFeBe">Setting<i class="material-icons right">arrow_drop_down</i></a></li>
@@ -31,8 +38,15 @@
   </nav>
 
   <ul class="sidenav" id="mobile-demo">
-    <li><a class="" href="/Home"><i class="material-icons" style="display: inline-block;vertical-align: bottom;">home</i>Home</a></li>
-    <li><a class="dropdown-trigger" href="#!" data-target="UseFeBeMobile">UseFeBe<i class="material-icons right">arrow_drop_down</i></a></li>
+    <li>
+      <a class="" href="/Home">
+        <i class="material-icons" style="display: inline-block;vertical-align: bottom; margin-right: 5px;">home</i>
+        Home
+      </a>
+    </li>
+    {{#isLoggedIn}}
+      <li><a class="dropdown-trigger" href="#!" data-target="UseFeBeMobile">UseFeBe<i class="material-icons right">arrow_drop_down</i></a></li>
+    {{/isLoggedIn}}
     {{#Rights 1}}
       <li><a class="" href="/Admin/System">System</a></li>
       <li><a class="dropdown-trigger " href="#!" data-target="AdminFeBeMobile">Setting<i class="material-icons right">arrow_drop_down</i></a></li>
