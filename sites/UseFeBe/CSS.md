@@ -2,6 +2,10 @@
 
 FeBe benutzt das Materialize CSS Framework. Es ist ein modernes responsives Front-End-Framework, das auf Material Design basiert. Es ist in CSS, HTML und JavaScript geschrieben und optimiert für die Entwicklung von responsiven, mobilen First-Webseiten und -Apps.
 
+## CSS - Icons (Folder & Files)
+Für Folder & Files existieren CSS KLassen. ( css-file-icons.css & css-folder-icons.css ) Ein Beispiel wie diese angezeigt werden können ist in der info page zu sehen.
+
+
 ## Materialize CSS
 https://materializecss.com/
 

@@ -1,0 +1,44 @@
+<h3>PHP, PHP-Extension (PHP.ini) & Composer</h3>
+<table>
+    {{#each chk}}
+    <tr>
+        <td>
+            <b>{{@key}}</b>
+        </td>
+        <td>
+            {{txt}}
+        </td>
+        {{#if chk}}
+        <td >
+            <div class="green white-text center ma5 pa10">
+                OK
+            </div>
+        </td>
+        {{else}}
+        <td>
+            <div class="red center ma5 pa10">
+                Fehler
+            </div>
+        </td>
+        {{/if}}
+    </tr>
+    {{/each}}
+</table>
+
+{{#if chk.composer.chk}}
+<h3>Composer Packages:</h3>
+<table>
+    {{#each chk.composer.packages}}
+    <tr>
+        <td>
+            <b>{{name}}</b>
+            <br>
+            {{info}}
+        </td>
+        <td>
+            {{ver}}
+        </td>  
+    </tr>
+    {{/each}}
+</table>
+{{/if}}

@@ -66,10 +66,10 @@
     background-color: #404040 !important;
     top: 22px;
     color: #fff;
-    position: absolute;
+    position: absolute !important;
     left: -10px;
     bottom: 5px;
-    padding: 0px 5px 0;
+    padding: 2px 5px 2px 5px;
     font-size: 13px;
     font-weight: 500;
     position: absolute;
@@ -1443,4 +1443,14 @@
 .fi-round-md.fi {
     border-radius: 4px;
     overflow: hidden
+}
+
+
+
+/* Eigene Formatierungen */
+.fi-hbs.fi:after {
+    border-left-color: #71a376
+}
+.fi-hbs.fi:before {
+    background-color: #2b8d35
 }
