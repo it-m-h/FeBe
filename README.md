@@ -181,3 +181,12 @@ parameters:
         - '#Constant BASEPATH not found.#'
         - '#Constant DURATION not found.#'
 ```
+
+
+# GIT - TAG
+```
+git tag 
+git tag -a v0.1.4 -m "Version 0.1.4"
+git push origin v0.1.4
+
+```
