@@ -64,7 +64,7 @@ class Database {
      * getSettings
      *
      * @param  string $param
-     * @return array<int|string, mixed>
+     * @return array
      */
     public function getSettings(string $param = ''): array {
         $result = array();
@@ -89,7 +89,7 @@ class Database {
      *
      * @param  string $sql
      * @param  array $bind
-     * @return array<string, mixed>
+     * @return array
      */
     public function getArray(string $sql, ?array $bind = null): array {
         if ($this->db instanceof \PDO) {

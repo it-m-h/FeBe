@@ -45,7 +45,7 @@ class Model {
     /**
      * getSettings
      *
-     * @return array<array<string, mixed>>
+     * @return array
      */
     public function getSettings(): array {  
         try {
@@ -59,7 +59,7 @@ class Model {
      * getSetting
      *
      * @param  int $id
-     * @return array<array<string, mixed>>
+     * @return array
      */
     public function getSetting(int $id): array {
             try {

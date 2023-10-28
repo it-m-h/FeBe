@@ -40,11 +40,20 @@ class User {
         $this->response['param'] = $param;
         if (!is_null($param)) {
             $id = intval($param);
-            $this->Model->toggleUserStatus($id);
-            $this->response['success'] = 'User -> toggleUserStatus - done';
+            if ($id > 0) {
+                $operationSuccessful = $this->Model->toggleUserStatus($id);
+                if ($operationSuccessful) {
+                    $this->response['success'] = 'User -> toggleUserStatus - done';
+                } else {
+                    $this->response['error'] = 'Fehler beim Ändern des User Status';
+                }
+            } else {
+                $this->response['error'] = 'Ungültige User-ID';
+            }
         } else {
-            $this->response['error'] = 'User Status nicht geändert';
+            $this->response['error'] = 'User Status nicht geändert, da keine ID angegeben wurde';
         }
+
         $this->run();
     }
     /**
@@ -103,12 +112,17 @@ class User {
                 // Passwort verändert?
                 $checkPW = trim($post['user_passwort']);
                 $pw = $this->Model->getPasswort($data['user_id']);
-                $pwInDB = trim($pw[0]['user_passwort']);
+                $pwInDB = $pw[0]['user_passwort'];
+                if(is_string($pwInDB)){
+                    $pwInDB = trim($pwInDB);
+                }else{
+                    $pwInDB = '';
+                }
                 if (strstr($pwInDB, $checkPW)) {
                     $data['user_passwort'] = $pwInDB;
                 } else {
-                    $data['user_passwort'] = sha1($checkPW );
-                }              
+                    $data['user_passwort'] = sha1($checkPW);
+                }
                 $this->response['formdata'] = $data;
                 if ($post['user_id'] == 0) {
                     $this->Model->insertUser($data);
@@ -116,6 +130,7 @@ class User {
                     $this->Model->updateUser($data);
                 }
                 $this->response['success'] = 'Validation erfolgreich';
+
                 $this->run();
             }
         }
@@ -124,7 +139,7 @@ class User {
      * getUsers
      *
      * @param  ?string $param
-     * @return array<array<string, mixed>>
+     * @return array
      */
     public function getUsers(?string $param = NULL) {
         try {

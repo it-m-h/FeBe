@@ -49,7 +49,7 @@ class Settings {
      * getSettings
      *
      * @param  ?string $param
-     * @return array<array<string, mixed>>
+     * @return array
      */
     public function getSettings(?string $param = NULL) {
         try {
@@ -62,7 +62,7 @@ class Settings {
      * getSettingsGroup
      *
      * @param  ?string $param
-     * @return  array<int|string, array<int, array<string, mixed>>>
+     * @return  array
      */
     public function getSettingsGroup(?string $param = NULL): array {
         $arr =  $this->Model->getSettings();

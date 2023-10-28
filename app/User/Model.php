@@ -25,7 +25,7 @@ class Model {
     /**
      * getUsers
      *
-     *  @return array<array<string, mixed>>
+     *  @return array
      */
     public function getUsers(): array {
         try {
@@ -39,7 +39,7 @@ class Model {
      * getUser
      *
      * @param  int $id
-     * @return array<array<string, mixed>>
+     * @return array
      */
     public function getUser(int $id): array {
         // User exists with this ID?
@@ -157,7 +157,7 @@ class Model {
      * getPasswort
      *
      * @param int $id
-     * @return array<void>[]
+     * @return array
      */
     public function getPasswort(int $id): array {
         // User exists with this ID?
@@ -174,7 +174,8 @@ class Model {
         } catch (\Exception $e) {
             return array();
         }
-    }
+    }    
+
     /**
      * run
      *

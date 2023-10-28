@@ -2,18 +2,19 @@
 declare(strict_types=1);
 
 namespace lib;
+
 use Parsedown;
 
 /**
  * Sites :: FeBe - Framework
  */
-class Sites {    
+class Sites {
     /**
      * html
      *
      * @var string
      */
-    public $html = '';    
+    public $html = '';
     /**
      * __construct
      *
@@ -23,57 +24,55 @@ class Sites {
      * @return void
      */
     public function __construct(string $folder = '', string $subfolder = '', string $file = 'Home') {
-        $this->html = '';
-        if ($folder != '') {
-            if($subfolder != ''){
-                $SitesDir = BASEPATH."sites/".$folder."/".$subfolder."/"; 
-            }else{
-                $SitesDir = BASEPATH."sites/".$folder."/";
+        $SitesDir = BASEPATH."sites/";
+        if ($folder !== '') {
+            $SitesDir .= $folder.'/';
+            if ($subfolder !== '') {
+                $SitesDir .= $subfolder.'/';
             }
-        } else {
-            $SitesDir = BASEPATH."sites/";
         }
-        $this->html = $this->getFile($SitesDir.$file); 
-    }    
+        $this->html = $this->getFile($SitesDir.$file);
+    }
     /**
      * getResponse
      *
      * @return string html response
      */
-    public function getResponse(): string{
-        if ($this->html != '') {
-            $data = array();
-            $data['main'] = $this->html;
-            $data['session'] = $_SESSION;
-            //echo '<pre>'.print_r($data).'</pre>';
+    public function getResponse(): string {
+        if (!empty($this->html)) {
+            $data = [
+                'main' => $this->html,
+                'session' => $_SESSION
+            ];
             $index = new Template('index', $data);
             return $index->html;
-        } else {
-            return Error::response(404);
         }
-    }    
+        return Error::response(404);
+    }
     /**
      * getFile
      *
      * @param  string $file
      * @return string
      */
-    public function getFile(string $file): string{
-        $html = '';
+    public function getFile(string $file): string {
         if (file_exists($file.'.md')) {
             $Parsedown = new Parsedown();
-            $html = $Parsedown->text(file_get_contents($file.'.md'));
-
-        } else if (file_exists($file.'.html')) {
-            $html = file_get_contents($file.'.html');
-
-        } else if (file_exists($file.'.php')) {
-            ob_clean();
+            return $Parsedown->text(file_get_contents($file.'.md'));
+        }
+        if (file_exists($file.'.html')) {
+            $content = file_get_contents($file.'.html');
+            return ($content === false) ? '' : $content;
+        }
+        if (file_exists($file.'.php')) {
+            if (ob_get_level()) {
+                ob_clean();
+            }
             ob_start();
             include($file.'.php');
-            $html = ob_get_contents();
-            ob_end_clean();
+            $output = ob_get_clean();
+            return ($output === false) ? '' : $output;
         }
-        return $html;
+        return '';
     }
 }

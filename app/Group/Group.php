@@ -101,7 +101,7 @@ class Group {
      * getGroups
      *
      * @param  ?string $param
-     * @return array<array<string, mixed>>
+     * @return array
      */
     public function getGroups(?string $param = NULL) {
         try {

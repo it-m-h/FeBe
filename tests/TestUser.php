@@ -5,7 +5,7 @@ define('DS', DIRECTORY_SEPARATOR);
 define('BASEPATH', str_replace('public', '', $_SERVER['DOCUMENT_ROOT']));
 require BASEPATH.'vendor/autoload.php';
 
-// File in Tests/UserTest.php
+// File in tests/UserTest.php
 class TestUser extends PHPUnit\Framework\TestCase {
 
     // db check

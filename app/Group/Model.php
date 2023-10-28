@@ -26,7 +26,7 @@ class Model {
     /**
      * getGroups
      *
-     * @return array<array<string, mixed>>
+     * @return array
      */
     public function getGroups(): array {
         try {
@@ -40,7 +40,7 @@ class Model {
      * getGroup
      *
      * @param  int $id
-     * @return array<array<string, mixed>>
+     * @return array
      */
     public function getGroup(int $id): array {
         try {

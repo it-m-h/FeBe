@@ -1,5 +1,7 @@
 parameters:
+    level: 9
     reportUnmatchedIgnoredErrors: false
+    treatPhpDocTypesAsCertain: false
     ignoreErrors:
         - '#Cannot access an offset on mixed#'
         - '#Constant BASEPATH not found\.#'
