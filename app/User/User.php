@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\User;
 
+use lib\Auth;
 use Valitron\Validator;
 
 /**
@@ -20,6 +21,7 @@ class User {
 
     private Model $Model;
     public function __construct(?string $method = 'run', ?string $param = NULL) {
+        Auth::initRights(1);
         $this->response['info'][] = 'User::construct';
         $this->response['method'] = $method;
         $this->response['param'] = $param;
@@ -44,8 +46,6 @@ class User {
             $this->response['error'] = 'User Status nicht geändert';
         }
         $this->run();
-
-
     }
     /**
      * Save

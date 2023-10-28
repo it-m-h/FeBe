@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace App\Settings;
+use lib\Auth;
 use Valitron\Validator;
 
 /**
@@ -18,13 +19,14 @@ class Settings {
     public $response;
     private Model $Model;
     public function __construct(?string $method = 'run', ?string $param = NULL) {
+        Auth::initRights(1);
         $this->response['info'][] = 'Settings::construct';
         $this->response['method'] = $method;
         $this->response['param'] = $param;
         $this->Model = new Model(); 
         if ($method)
             $this->$method($param);
-    }      
+    }  
     /**
      * updateSettings
      *

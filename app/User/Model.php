@@ -42,6 +42,7 @@ class Model {
      * @return array<array<string, mixed>>
      */
     public function getUser(int $id): array {
+        // User exists with this ID?
         try {
             $sql = "Select * from users LEFT JOIN groups ON users.user_gruppe = groups.group_id WHERE user_id = :id";
             $bind = array(
@@ -94,6 +95,11 @@ class Model {
      * @return bool
      */
     public function updateUser(array $param): bool {
+        // User exists with this ID?
+        $user = $this->getUser($param['user_id']);
+        if (!isset($user[0]['user_id'])) {
+            return false;
+        }
         try {
             $passwort = $this->getPasswort($param['user_id']);
             if ($passwort[0]['user_passwort'] == $param['user_passwort']) {
@@ -129,6 +135,11 @@ class Model {
      * @return bool
      */
     public function toggleUserStatus(int $param): bool {
+        // User exists with this ID?
+        $user = $this->getUser($param);
+        if (!isset($user[0]['user_id'])) {
+            return false;
+        }
         try {
             $sql = "UPDATE users SET user_active = CASE WHEN user_active = 0 THEN 1 ELSE 0 END WHERE user_id = :user_id";
             $bind = array(
@@ -149,6 +160,11 @@ class Model {
      * @return array<void>[]
      */
     public function getPasswort(int $id): array {
+        // User exists with this ID?
+        $user = $this->getUser($id);
+        if (!isset($user[0]['user_id'])) {
+            return array();
+        }
         try {
             $sql = "SELECT user_passwort FROM users WHERE user_id = :user_id";
             $bind = array(

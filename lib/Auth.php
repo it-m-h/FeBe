@@ -59,11 +59,23 @@ abstract class Auth {
         // 0 = Admin
         // 5 = User
         // 9 = Gast
-        if (isset($_SESSION['Rights']) && $_SESSION['Rights'] <= $rights) {
+        if (isset($_SESSION['Rights']) && $_SESSION['Rights'] <= $rights && $_SESSION['Rights'] != 0) {
             return true;
         } else {
             return false;
         }
+    }    
+    /**
+     * initRights
+     *
+     * @param  int $rights
+     * @return void
+     */
+    public static function initRights(int $rights): void {
+        if (!isset($_SESSION['Rights']))
+            $_SESSION['Rights'] = 0;
+        if ($_SESSION['Rights'] < 1 || !Auth::chkRights($rights))
+            header('Location: /');
     }
     /**
      * isAdmin
