@@ -1,8 +1,5 @@
 $('.sidenav').sidenav();
 $('.parallax').parallax();
-hljs.highlightAll();
-M.AutoInit();
-M.updateTextFields();
 $('select').formSelect();
 $('.dropdown-trigger').dropdown();
 $('.modal').modal();
@@ -20,4 +17,7 @@ $('.tap-target').tapTarget();
 $('.slider').slider();
 $('.autocomplete').autocomplete();
 $('.chips').chips();
+hljs.highlightAll();
+M.AutoInit();
+M.updateTextFields();
 

@@ -9,7 +9,22 @@ use Handlebars\Handlebars;
 $settings = new Settings();
 $handlebars = new Handlebars();
 
-$template =  file_get_contents(BASEPATH.'templates/Admin/Settings.hbs');
-echo $handlebars->render(
-        $template, $settings->getSettingsGroup()
-);
+
+try{
+    $template = file_get_contents(BASEPATH.'templates/Admin/Settings.hbs');
+    if ($template === false) {
+        echo 'Template konnte nicht geladen werden';
+        exit;
+    }
+    echo $handlebars->render(
+        $template,
+        $settings->getSettingsGroup()
+    );
+}catch(\Exception $e){
+    echo $e->getMessage();
+    exit;
+}
+
+    
+
+

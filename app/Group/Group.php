@@ -3,12 +3,22 @@
 declare(strict_types=1);
 
 namespace App\Group;
+
 use Valitron\Validator;
 
+/**
+ * Group :: FeBe - Framework
+ * @param  string $method
+ * @param  string $param
+ * @return void
+ */
 class Group {
-    public $response = array();
-    private $Model;
-    public function __construct($method = 'run', $param = NULL) {
+    /**
+     * @var mixed[] $response
+     */
+    public $response;
+    private Model $Model;    
+    public function __construct(?string $method = 'run', ?string $param = NULL) {
         $this->response['info'][] = 'Group::construct';
         $this->response['method'] = $method;
         $this->response['param'] = $param;
@@ -16,31 +26,38 @@ class Group {
         if ($method)
             $this->$method($param);
     }
-    public function getGroups($param = NULL) {
-        return $this->Model->getGroups();
-    }
-    public function getGroup($param = NULL) {
-        $data = $this->Model->getGroup($param);
-        if (is_array($data) && isset($data[0])) {
-            $this->response = $data[0];
-        } else {
-            $this->response['error'] = 'Group nicht gefunden';
-        }
-        $this->run();
-    }
-    public function toggleGroupStatus($param = NULL) {
+    /**
+     * toggleGroupStatus
+     *
+     * @param  ?string $param
+     * @return void
+     */
+    public function toggleGroupStatus(?string $param = NULL) {
         $this->response['info'][] = 'Group::toggleGroupStatus';
         $this->response['param'] = $param;
-        if (isset($param)) {
-            $this->Model->toggleGroupStatus($param);
+        if (!is_null($param)) {
+            $id = intval($param);
+            $this->Model->toggleGroupStatus($id);
             $this->response['success'] = 'Group Status geändert';
         } else {
             $this->response['error'] = 'Group Status nicht geändert';
         }
         $this->run();
     }
-    public function Save($param = NULL) {
-        if (isset($_POST)) {
+         
+    /**
+     * Save
+     *
+     * @param  ?string $param
+     * @return void
+     */
+    public function Save(?string $param = NULL) {
+        $data = array(
+            'group_id' => 0,
+            'group_rights' => 0,
+            'group_name' => ''
+        );
+        if (!empty($_POST)) {
             $post = $_POST;
             // Daten überprüfen mit Valitron/Validator
             $v = new Validator($post);
@@ -58,20 +75,74 @@ class Group {
                 $this->run();
                 return;
             } else {
+                if ($post['group_id'])
+                    $data['group_id'] = intval($post['group_id']);
+                 if ($post['group_rights'])
+                    $data['group_rights'] = intval($post['group_rights']);
+                if ($post['group_name'])
+                    $data['group_name'] = $post['group_name'];
+
                 $this->response['formdata'] = $post;
                 if ($post['group_id'] == 0) {
-                    $this->Model->insert($post);
+                    $this->Model->insert($data);
                 } else {
-                    $this->Model->update($post);
+                    $this->Model->update($data);
                 }
                 $this->response['success'] = 'Validation erfolgreich';
                 $this->run();
             }
         }
     }
-    public function run() {
-        echo json_encode($this->response);
+
+
+    /**
+     * getGroups
+     *
+     * @param  ?string $param
+     * @return array<array<string, mixed>>
+     */
+    public function getGroups(?string $param = NULL) {
+        try {
+            return $this->Model->getGroups();
+        } catch (\PDOException $e) {
+            return array();
+        }
     }
+    /**
+     * getGroup
+     *
+     * @param  ?string $param
+     * @return void
+     */
+    public function getGroup(?string $param = NULL) {
+        if (isset($param)) {
+            try {
+                $group_id = intval($param);
+                $data = $this->Model->getGroup($group_id);
+                if (is_array($data) && isset($data[0])) {
+                    $this->response = $data[0];
+                } else {
+                    $this->response['error'] = 'Group nicht gefunden';
+                }
+            } catch (\Exception $e) {
+                $this->response['error'] = 'Group nicht gefunden';
+            }
+        }
+        $this->run();
+    }
+    /**
+     * run
+     *
+     * @return void
+     */
+    public function run(): void {
+        echo json_encode($this->response);
+    }    
+    /**
+     * __destruct
+     *
+     * @return void
+     */
     public function __destruct() {
     }
 }

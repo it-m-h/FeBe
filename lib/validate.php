@@ -1,10 +1,20 @@
 <?php
+declare(strict_types=1);
 
 namespace Lib;
 
+/**
+ * validate :: FeBe - Framework
+ */
 abstract class validate {
-
-    public static function checkMail($mail) {
+    
+    /**
+     * checkMail
+     *
+     * @param  string $mail
+     * @return bool
+     */
+    public static function checkMail($mail): bool {
         // email ohne '@' und ohne '.'
         if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
             return false;

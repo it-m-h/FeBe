@@ -13,14 +13,10 @@ class TestUser extends PHPUnit\Framework\TestCase {
         $this->assertIsArray($db->getArray('SELECT * FROM user'));
     }
 
-
     public function testThatStringMatch() {
         $sring = 'home';
         $this->assertSame($sring, 'home');
     }
-
-    
-
 
     public function testThatNumberAddUp() {
         $this->assertEquals(10, 5 + 5);

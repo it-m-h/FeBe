@@ -24,7 +24,7 @@ echo '</code></pre>';
 
 // alle jS cookies ausgeben
 echo '<h3>JS Cookies</h3>';
-echo '<p>Die PHPSESSID ändert sich nach jedem Login oder Logput.</p>';
+echo '<p>Die PHPSESSID ändert sich nach jedem Login oder Logout. Weitere Sicherheiten sind noch nicht umgesetzt.</p>';
 echo '<pre><code class="lang:array hljs">';
 print_r($_COOKIE);
 echo '</code></pre>';

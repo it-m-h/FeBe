@@ -21,6 +21,10 @@ Composer is required to install the dependencies.
 ## Composer:
 ```bash
 composer create-project it-m-h/FeBe testFebe --stability=dev
+composer update
+composer outdated
+composer update --with-all-dependencies
+composer update phpunit/phpunit
 ```
 
 ## GIT:
@@ -112,6 +116,7 @@ chgrp -R www-data /var/www/FeBe
 
 ```
 ### Apache - Configuration
+Apache start and stop after configuration changes.
 
 ```
 nano /etc/apache2/sites-available/000-default.conf
@@ -125,7 +130,10 @@ nano /etc/apache2/sites-available/000-default.conf
     </Directory>
 </VirtualHost>
 ```
+
 ### php.ini
+DB - Connection with PDO
+
 ```
 extension=pdo_sqlite
 ```
@@ -150,4 +158,26 @@ class MyUserTest extends PHPUnit\Framework\TestCase
 ## Test run in Konsole
 ```
 php vendor/bin/phpunit tests/TestUser.php --colors
+```
+
+
+
+# PHPstan
+```
+composer require --dev phpstan/phpstan
+
+cd C:\xampp\htdocs\GIT_Project\it-m-h\FeBe
+
+php vendor/bin/phpstan analyse -l 9 app
+php vendor/bin/phpstan analyse -l 9 lib/Auth.php
+php vendor/bin/phpstan analyse -l 9 lib/Database.php
+```
+
+## phpstan.neon
+```
+parameters:
+    ignoreErrors:
+        - '#Cannot access an offset on mixed#'
+        - '#Constant BASEPATH not found.#'
+        - '#Constant DURATION not found.#'
 ```

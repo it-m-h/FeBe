@@ -4,12 +4,28 @@ declare(strict_types=1);
 namespace lib;
 use Parsedown;
 
-class Sites {
-    public $html = '';
-    public function __construct($folder = '', $subfolder = '',$file = 'Home') {
+/**
+ * Sites :: FeBe - Framework
+ */
+class Sites {    
+    /**
+     * html
+     *
+     * @var string
+     */
+    public $html = '';    
+    /**
+     * __construct
+     *
+     * @param  string $folder
+     * @param  string $subfolder
+     * @param  string $file
+     * @return void
+     */
+    public function __construct(string $folder = '', string $subfolder = '', string $file = 'Home') {
         $this->html = '';
-        if ($folder != '' OR $folder != null) {
-            if($subfolder != '' OR $subfolder != null){
+        if ($folder != '') {
+            if($subfolder != ''){
                 $SitesDir = BASEPATH."sites/".$folder."/".$subfolder."/"; 
             }else{
                 $SitesDir = BASEPATH."sites/".$folder."/";
@@ -18,8 +34,13 @@ class Sites {
             $SitesDir = BASEPATH."sites/";
         }
         $this->html = $this->getFile($SitesDir.$file); 
-    }
-    public function getResponse(){
+    }    
+    /**
+     * getResponse
+     *
+     * @return string html response
+     */
+    public function getResponse(): string{
         if ($this->html != '') {
             $data = array();
             $data['main'] = $this->html;
@@ -30,8 +51,14 @@ class Sites {
         } else {
             return Error::response(404);
         }
-    }
-    public function getFile($file){
+    }    
+    /**
+     * getFile
+     *
+     * @param  string $file
+     * @return string
+     */
+    public function getFile(string $file): string{
         $html = '';
         if (file_exists($file.'.md')) {
             $Parsedown = new Parsedown();

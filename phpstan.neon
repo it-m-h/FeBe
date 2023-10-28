@@ -1,0 +1,9 @@
+parameters:
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        - '#Cannot access an offset on mixed#'
+        - '#Constant BASEPATH not found\.#'
+        - '#Constant DURATION not found#'
+        - '#no value type specified in iterable type array#'
+    excludePaths:
+        - lib/Socket.php

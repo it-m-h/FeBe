@@ -4,65 +4,110 @@ declare(strict_types=1);
 
 namespace lib;
 
+/**
+ * Database :: FeBe - Framework
+ */
 class Database {
 
-    public $db;
-    public $file;
-    public $init;
+    private \PDO|null $db;
 
-    public function __construct($method = '', $param = '') {    
-        $this->checkDBSqlite3(BASEPATH.'data/FeBe.sqlite3'); 
+    /**
+     * __construct
+     *
+     * @param  string $method
+     * @param  string $param
+     * @return void
+     */
+    public function __construct(string $method = '', string $param = '') {
+        $this->checkDBSqlite3(BASEPATH.'data/FeBe.sqlite3');
         $this->db = new \PDO('sqlite:'.BASEPATH.'data/FeBe.sqlite3');
+        //$this->db = new \PDO('mysql:host=localhost;dbname=FeBe', 'root', '');
         if ($method != '') {
             $this->$method($param);
         }
-        //$this->db = new \PDO('mysql:host=localhost;dbname=FeBe', 'root', '');
     }
-    // check if database exists
-    public function checkDBSqlite3($file) {
+    // check if database exists    
+    /**
+     * checkDBSqlite3
+     *
+     * @param  string $file
+     * @return void
+     */
+    public function checkDBSqlite3(string $file) {
         if (!file_exists($file)) {
             $sql = file_get_contents(BASEPATH.'data/SQLITE3.sql');
+            if ($sql === false) {
+                throw new \RuntimeException("Die SQL-Datei konnte nicht gelesen werden.");
+            }
             $db = new \PDO('sqlite:'.$file);
             $db->exec($sql);
             $db = null;
-        } 
+        }
     }
+    /**
+     * setSettingsDefine
+     *
+     * @return void
+     */
     public function setSettingsDefine() {
         $sql = "SELECT * FROM settings";
         $result = $this->getArray($sql);
-        foreach ($result as $key => $value) {
-            define($value['settings_name'], $value['settings_value']);
+        if (is_array($result) && !empty($result)) {
+            foreach ($result as $key => $value) {
+                if (is_array($value) && isset($value['settings_name']) && is_string($value['settings_name']) && !defined($value['settings_name'])) {
+                    define($value['settings_name'], $value['settings_value']);
+                }
+            }
         }
     }
-    public function getSettings($param = '') {
+    /**
+     * getSettings
+     *
+     * @param  string $param
+     * @return array<int|string, mixed>
+     */
+    public function getSettings(string $param = ''): array {
         $result = array();
         $return = array();
         if ($param != '') {
             $sql = "SELECT * FROM settings WHERE settings_name = :name";
             $bind = array(':name' => $param);
             $result = $this->getArray($sql, $bind);
-        }else{
+        } else {
             $sql = "SELECT * FROM settings";
             $result = $this->getArray($sql);
         }
         foreach ($result as $key => $value) {
-            $return[$value['settings_name']] = $value['settings_value'];
+            if (is_array($value) && isset($value['settings_name'])) {
+                $return[$value['settings_name']] = $value['settings_value'];
+            }
         }
         return $return;
     }
-    public function getArray($sql, $bind = null) {
-        try {
-            $stmt = $this->db->prepare($sql);
-            if ($bind != null) {
-                foreach ($bind as $key => $value) {
-                    $stmt->bindValue($key, $value);
+    /**
+     * getArray
+     *
+     * @param  string $sql
+     * @param  array $bind
+     * @return array<string, mixed>
+     */
+    public function getArray(string $sql, ?array $bind = null): array {
+        if ($this->db instanceof \PDO) {
+            try {
+                $stmt = $this->db->prepare($sql);
+                if ($bind != null) {
+                    foreach ($bind as $key => $value) {
+                        $stmt->bindValue($key, $value);
+                    }
                 }
+                $stmt->execute();
+                $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                return $result;
+            } catch (\Exception $e) {
+                return array();
             }
-            $stmt->execute();
-            $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-            return $result;
-        } catch (\Exception $e) {
-            return false;
+        } else {
+            return array();
         }
     }
     /**
@@ -72,29 +117,33 @@ class Database {
      * @param  string $table
      * @return bool Methode liefert true oder false zurück
      */
-    public function insert_bind($data, $table) {
+    public function insert_bind(array $data, string $table): bool {
 
         if (!is_array($data) || $table == '') {
             return false;
         } else {
-            try {
-                $sql = '';
-                $fields = array();
-                $bind = array();
-                $values = array();
-                foreach ($data as $key => $value) {
-                    $fields[] = $key;
-                    $bind[] = ':'.$key;
-                    $values[':'.$key] = $value;
+            if ($this->db instanceof \PDO) {
+                try {
+                    $sql = '';
+                    $fields = array();
+                    $bind = array();
+                    $values = array();
+                    foreach ($data as $key => $value) {
+                        $fields[] = $key;
+                        $bind[] = ':'.$key;
+                        $values[':'.$key] = $value;
+                    }
+                    $sql = 'INSERT INTO '.$table.' ('.implode(',', $fields).') VALUES ('.implode(',', $bind).')';
+                    $stmt = $this->db->prepare($sql);
+                    foreach ($values as $key => $value) {
+                        $stmt->bindValue($key, $value);
+                    }
+                    $success = $stmt->execute();
+                    return $success ? true : false;
+                } catch (\Exception $e) {
+                    return false;
                 }
-                $sql = 'INSERT INTO '.$table.' ('.implode(',', $fields).') VALUES ('.implode(',', $bind).')';
-                $stmt = $this->db->prepare($sql);
-                foreach ($values as $key => $value) {
-                    $stmt->bindValue($key, $value);
-                }
-                $success = $stmt->execute();
-                return $success ? true : false;
-            } catch (\Exception $e) {
+            } else {
                 return false;
             }
         }
@@ -102,90 +151,151 @@ class Database {
     /**
      * update_bind
      *
-     * @param  int $id  Primary Key als Zahl
+     * @param  array $data 
+     * @param  string $table
      * @return bool Methode liefert true oder false zurück
      */
-    public function update_bind($data, $table) {
+    public function update_bind(array $data, string $table): bool {
         if (!is_array($data) || $table == '') {
             return false;
         } else {
-            try {
-                $sql = '';
-                $fields = array();
-                $bind = array();
-                $values = array();
-                foreach ($data as $key => $value) {
-                    $fields[] = $key.' = :'.$key;
-                    $values[':'.$key] = $value;
+            if ($this->db instanceof \PDO) {
+                try {
+                    $sql = '';
+                    $fields = array();
+                    $bind = array();
+                    $values = array();
+                    foreach ($data as $key => $value) {
+                        $fields[] = $key.' = :'.$key;
+                        $values[':'.$key] = $value;
+                    }
+                    $sql = 'UPDATE '.$table.' SET '.implode(',', $fields).' WHERE id = :id';
+                    $stmt = $this->db->prepare($sql);
+                    foreach ($values as $key => $value) {
+                        $stmt->bindValue($key, $value);
+                    }
+                    $success = $stmt->execute();
+                    return $success ? true : false;
+                } catch (\Exception $e) {
+                    return false;
                 }
-                $sql = 'UPDATE '.$table.' SET '.implode(',', $fields).' WHERE id = :id';
-                $stmt = $this->db->prepare($sql);
-                foreach ($values as $key => $value) {
-                    $stmt->bindValue($key, $value);
-                }
-                $success = $stmt->execute();
-                return $success ? true : false;
-            } catch (\Exception $e) {
+            } else {
                 return false;
+
             }
         }
     }
-    public function insert($sql, $bind = null) {
-        try {
-            $stmt = $this->db->prepare($sql);
-            if ($bind != null) {
-                foreach ($bind as $key => $value) {
-                    $stmt->bindValue($key, $value);
+    /**
+     * insert
+     *
+     * @param  string $sql
+     * @param  array $bind
+     * @return int Methode liefert die letzte ID zurück
+     */
+    public function insert(string $sql, ?array $bind = null): int {
+
+        if ($this->db instanceof \PDO) {
+            try {
+                $stmt = $this->db->prepare($sql);
+                if ($bind != null) {
+                    foreach ($bind as $key => $value) {
+                        $stmt->bindValue($key, $value);
+                    }
                 }
+                $stmt->execute();
+                return intval($this->db->lastInsertId());
+            } catch (\Exception $e) {
+                return 0;
             }
-            $stmt->execute();
-            return $this->db->lastInsertId();
-        } catch (\Exception $e) {
-            return false;
+        } else {
+            return 0;
         }
+
     }
-    public function update($sql, $bind = null) {
-        try {
-            $stmt = $this->db->prepare($sql);
-            if ($bind != null) {
-                foreach ($bind as $key => $value) {
-                    $stmt->bindValue($key, $value);
+    /**
+     * update
+     *
+     * @param  string $sql
+     * @param  array $bind
+     * @return int Methode liefert die Anzahl der betroffenen Zeilen zurück
+     */
+    public function update(string $sql, ?array $bind = null): int {
+
+        if ($this->db instanceof \PDO) {
+            try {
+                $stmt = $this->db->prepare($sql);
+                if ($bind != null) {
+                    foreach ($bind as $key => $value) {
+                        $stmt->bindValue($key, $value);
+                    }
                 }
+                $stmt->execute();
+                return $stmt->rowCount();
+            } catch (\Exception $e) {
+                return 0;
             }
-            $stmt->execute();
-            return $stmt->rowCount();
-        } catch (\Exception $e) {
-            return false;
+        } else {
+            return 0;
         }
+
     }
-    public function delete($sql, $bind = null) {
-        try {
-            $stmt = $this->db->prepare($sql);
-            if ($bind != null) {
-                foreach ($bind as $key => $value) {
-                    $stmt->bindValue($key, $value);
+    /**
+     * delete
+     *
+     * @param  string $sql
+     * @param  array $bind
+     * @return int Methode liefert die Anzahl der betroffenen Zeilen zurück
+     */
+    public function delete(string $sql, ?array $bind = null): int {
+
+        if ($this->db instanceof \PDO) {
+            try {
+                $stmt = $this->db->prepare($sql);
+                if ($bind != null) {
+                    foreach ($bind as $key => $value) {
+                        $stmt->bindValue($key, $value);
+                    }
                 }
+                $stmt->execute();
+                return $stmt->rowCount();
+            } catch (\Exception $e) {
+                return 0;
             }
-            $stmt->execute();
-            return $stmt->rowCount();
-        } catch (\Exception $e) {
-            return false;
+        } else {
+            return 0;
         }
+
     }
-    public function run($sql, $bind = null) {
-        try {
-            $stmt = $this->db->prepare($sql);
-            if ($bind != null) {
-                foreach ($bind as $key => $value) {
-                    $stmt->bindValue($key, $value);
+    /**
+     * run
+     *
+     * @param  string $sql
+     * @param  array $bind
+     * @return int Methode liefert die Anzahl der betroffenen Zeilen zurück
+     */
+    public function run(string $sql, ?array $bind = null): int {
+        if ($this->db instanceof \PDO) {
+            try {
+                $stmt = $this->db->prepare($sql);
+                if ($bind != null) {
+                    foreach ($bind as $key => $value) {
+                        $stmt->bindValue($key, $value);
+                    }
                 }
+                $stmt->execute();
+                return $stmt->rowCount();
+            } catch (\Exception $e) {
+                return 0;
             }
-            $stmt->execute();
-            return $stmt->rowCount();
-        } catch (\Exception $e) {
-            return false;
+        } else {
+            return 0;
         }
     }
+    /**
+     * __destruct
+     *
+     * @return void
+     */
     public function __destruct() {
         // DB schliessen
         $this->db = null;

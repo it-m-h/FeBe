@@ -7,10 +7,31 @@ namespace lib;
 use Handlebars\Handlebars;
 use Handlebars\Loader\FilesystemLoader;
 
-class Template {
-    public $hbs = null;
-    public $html = null;
-    public function __construct($template = 'index', $data = array(), $callback = 'render') {
+/**
+ * Template :: FeBe - Framework
+ */
+class Template {    
+    /**
+     * hbs
+     *
+     * @var Handlebars
+     */
+    public Handlebars $hbs;    
+    /**
+     * html
+     *
+     * @var string
+     */
+    public string $html;    
+    /**
+     * __construct
+     *
+     * @param  string $template
+     * @param  array $data
+     * @param  string $callback
+     * @return void
+     */
+    public function __construct(string $template = 'index', array $data = array(), string $callback = 'render') {
         $TemplateDir = BASEPATH."templates/";
         $TemplateLoader = new FilesystemLoader(
             $TemplateDir,
@@ -59,11 +80,25 @@ class Template {
         });
 
         $this->{$callback}($template, $data);
-    }
-    public function render($template, $data) {
+    }    
+    /**
+     * render
+     *
+     * @param  string $template
+     * @param  array $data
+     * @return void
+     */
+    public function render(string $template, array $data): void {
         $this->html = $this->hbs->render($template, $data);
-    }
-    public function echo($template, $data) {
+    }    
+    /**
+     * echo
+     *
+     * @param  string $template
+     * @param  array $data
+     * @return void
+     */
+    public function echo(string $template, array $data): void {
         echo $this->hbs->render($template, $data);
     }
 }

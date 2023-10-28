@@ -8,7 +8,7 @@ use Steampixel\Route;
 // HOME
 // -----------------------------------------------
 Route::add('/', function () {
-    $Sites = new Sites(null, null, 'Home');
+    $Sites = new Sites('', '', 'Home');
     echo $Sites->getResponse();
 }, ['get']);
 
@@ -21,16 +21,20 @@ Route::add('/Account/Logout', function () {
 }, ['get']);
 Route::add('/Account/Login', function () {
     $file = 'Login';
-    $Sites = new Sites(null, null, $file);
+    $Sites = new Sites('', '', $file);
     echo $Sites->getResponse();
 }, ['get']);
 Route::add('/Account/check', function () {
-    $loginname = $_POST['name'];
-    $password = sha1($_POST['password']);
-    if(Auth::chkLogin($loginname, $password)){
-        header('Location: /Account/Account');
-    } else {
+    if (empty($_POST['name']) || empty($_POST['password'])) {
         header('Location: /Account/Login');
+    }else{
+        $loginname = $_POST['name'];
+        $password = sha1($_POST['password']);
+        if(Auth::chkLogin($loginname, $password)){
+            header('Location: /Account/Account');
+        } else {
+            header('Location: /Account/Login');
+        }
     }
 }, ['post']);
 
@@ -54,11 +58,11 @@ Route::add('/App/([a-zA-Z0-9]*)/([a-zA-Z0-9]*)/([a-zA-Z0-9]*)', function ($class
 // Frontend - Sites Routings
 // -----------------------------------------------
 Route::add('/([a-zA-Z0-9]*)', function ($file){
-    $Sites = new Sites(null, null, $file);
+    $Sites = new Sites('', '', $file);
     echo $Sites->getResponse();
 }, ['get', 'post']);
 Route::add('/([a-zA-Z0-9]*)/([a-zA-Z0-9]*)', function ($folder, $file){
-    $Sites = new Sites($folder, null, $file);
+    $Sites = new Sites($folder, '', $file);
     echo $Sites->getResponse();
 }, ['get', 'post']);
 Route::add('/([a-zA-Z0-9]*)/([a-zA-Z0-9]*)/([a-zA-Z0-9]*)', function ($subfolder, $folder, $file) {
