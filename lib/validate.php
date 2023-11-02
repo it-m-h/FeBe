@@ -6,8 +6,7 @@ namespace Lib;
 /**
  * validate :: FeBe - Framework
  */
-abstract class validate {
-    
+abstract class validate {    
     /**
      * checkMail
      *

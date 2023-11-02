@@ -53,6 +53,105 @@ class Model {
             return array();
         }
     }
+
+    /** 
+     * userExists
+     * 
+     * @param string $user_name
+     * @param int $id
+     * @return bool
+     */
+    public function userExists(string $user_name, int $id): bool {
+        try {
+            $sql = "Select * from users WHERE user_name = :user_name";
+            if($id > 0){
+                $sql .= " AND user_id != :user_id";
+                $bind = array(
+                    ':user_name' => $user_name,
+                    ':user_id' => $id
+                );
+            } else{
+                $bind = array(
+                    ':user_name' => $user_name
+                );
+            }
+            $result = $this->myDB->getArray($sql, $bind);
+            if (count($result) > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * pfadExists
+     * 
+     * @param string $user_pfad
+     * @param int $id
+     * @return bool
+     */
+    public function pfadExists(string $user_pfad, int $id): bool {
+        try {
+            $sql = "Select * from users WHERE user_pfad = :user_pfad";
+            if ($id > 0) {
+                $sql .= " AND user_id != :user_id";
+                $bind = array(
+                    ':user_pfad' => $user_pfad,
+                    ':user_id' => $id
+                );
+            } else {
+                $bind = array(
+                    ':user_pfad' => $user_pfad
+                );
+            }
+            $result = $this->myDB->getArray($sql, $bind);
+            if (count($result) > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    /** 
+     * rfidExists
+     * 
+     * @param string $user_rfid
+     * @param int $id
+     * @return bool
+     */
+    public function rfidExists(string $user_rfid, int $id): bool {
+        try {
+            $sql = "Select * from users WHERE user_RFID = :user_RFID";
+            if ($id > 0) {
+                $sql .= " AND user_id != :user_id";
+                $bind = array(
+                    ':user_RFID' => $user_rfid,
+                    ':user_id' => $id
+                );
+            } else {
+                $bind = array(
+                    ':user_RFID' => $user_rfid
+                );
+            }
+            $result = $this->myDB->getArray($sql, $bind);
+            if (count($result) > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+
+    
     /**
      * insertUser
      *

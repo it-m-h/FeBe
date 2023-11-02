@@ -1,22 +1,18 @@
 <h3>Settings</h3>
 
-
 <ul class="collapsible">
     {{#each .}}
         <li>
             <div class="collapsible-header"><i class="material-icons">menue</i>{{@key}}</div>
             <div class="collapsible-body grey lighten-2" >
-
                 <div class="row">
-
                     <table>
                         <thead>
                             <tr>
                                 <th class="center w10">ID</th>
                                 <th class="w30">Settings Name</th>
-                                <th class="center w10"></th>                                <th>Settings Value</th>
-                                
-
+                                <th class="center w10"></th> 
+                                <th>Settings Value</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -35,7 +31,6 @@
                                         </span>
                                     </td>
                                     <td class="value_{{settings_id}}">{{settings_value}}</td>
-                                    
                                 </tr>
                             {{/each}}
                         </tbody>
@@ -44,12 +39,10 @@
             </div>
         </li>
     {{/each}}
-
 </ul>
 
 
 <script>
-
     var id=0;
     var value = '';
     $('.save').hide();

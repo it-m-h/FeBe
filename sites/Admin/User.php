@@ -1,7 +1,7 @@
 <?php
 if (!isset($_SESSION['Rights']) || $_SESSION['Rights'] != 1)
     header('Location: /');
-    
+
 use App\User\User;
 use Handlebars\Handlebars;
 use lib\Database;
@@ -15,7 +15,7 @@ $groups = $db->getArray('SELECT * FROM groups');
 ?>
 <h1>Sites: SQLITE3 - User with AJAX to the App/User</h1>
 <div class="row">
-    <div class="col s3 grey lighten-2 z-depth-2">
+    <div class="col s6 grey lighten-2 z-depth-2">
         <form id="UserForm" action="/App/User/Save" method="post" class="row">
             <div class="input-field col s6">
                 <input id="save" name="save" type="submit" class="btn red white-text btn w100" value="Speichern">
@@ -44,13 +44,12 @@ $groups = $db->getArray('SELECT * FROM groups');
             <div class="input-field col s12">
                 <select id="user_gruppe" name="user_gruppe" value="1">
                     <?php
-                    $i=0;
+                    $i = 0;
                     foreach ($groups as $group) {
-                        if($i==0){
+                        if ($i == 0) {
                             echo '<option value="'.$group['group_id'].'" selected>'.$group['group_name'].'</option>';
                             $i++;
-                        }
-                        else{
+                        } else {
                             echo '<option value="'.$group['group_id'].'">'.$group['group_name'].'</option>';
                         }
                     }
@@ -65,7 +64,7 @@ $groups = $db->getArray('SELECT * FROM groups');
             </div>
         </form>
     </div>
-    <div class="col s9">
+    <div class="col s6">
         <section id="UserListe">
             <div class="row">
                 <div class="col s12">
@@ -75,7 +74,7 @@ $groups = $db->getArray('SELECT * FROM groups');
                                 <th>edit</th>
                                 <th>Pfad</th>
                                 <th>Name</th>
-                                <th>Passwort</th>
+                                <!-- <th>Passwort</th> -->
                                 <th>Gruppe</th>
                                 <th>RFID</th>
                                 <th>active</th>
@@ -93,7 +92,7 @@ $groups = $db->getArray('SELECT * FROM groups');
                                 <td data-id="{{user_id}}"><button class="edit green btn"><i class="material-icons">create</i></button></td>
                                 <td>{{user_pfad}}</td>
                                 <td>{{user_name}}</td>
-                                <td>{{user_passwort}}</td>
+                                <!-- <td>{{user_passwort}}</td> -->
                                 <td>{{group_name}} ({{group_rights}})</td>
                                 <td>{{user_RFID}}</td>
                                 <td data-id="{{user_id}}">
@@ -200,6 +199,7 @@ $groups = $db->getArray('SELECT * FROM groups');
             data: data,
             dataType: 'json',
             success: function(response){
+            console.log(response);
                 if(response['success']){
                     $('#UserForm').find('input').each(function(){
                         var value = $(this).attr('value');
@@ -211,12 +211,16 @@ $groups = $db->getArray('SELECT * FROM groups');
                     }, 700);
 
                 } else if(response['error']){
-                    for (let key in response.data) {
-                        let value = response.data[key];
-                        M.toast({html: key + ': ' + value , classes: 'red'});
+                    console.log(response);
+                    if(!Array.isArray(response['error'])){
+                        M.toast({html: response['error'] , classes: 'red'});
+                    }else{
+                        for (let key in response.data) {
+                            let value = response.data[key];
+                            M.toast({html: key + ': ' + value , classes: 'red'});
+                        }
                     }
-                }
-                
+                } 
             }
         });
     });

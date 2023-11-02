@@ -62,7 +62,7 @@ class User {
      * @param  ?string $param
      * @return void
      */
-    public function Save(?string $param = NULL) {
+    public function Save(?string $param = NULL): void {
         $data = array(
             'user_id' => 0,
             'user_pfad' => '',
@@ -71,7 +71,6 @@ class User {
             'user_gruppe' => 0,
             'user_RFID' => ''
         );
-
         if (!empty($_POST)) {
             $post = $_POST;
             // Daten überprüfen mit Valitron/Validator
@@ -82,9 +81,11 @@ class User {
             $v->rule('lengthMin', 'user_pfad', 4)->message('muss mindestens 4 Zeichen lang sein');
             $v->rule('regex', 'user_pfad', '/^[a-zA-Z0-9]+$/')->message('nur Buchstaben und Zahlen sind erlaubt');
             $v->rule('lengthMin', 'user_name', 4)->message('muss mindestens 4 Zeichen lang sein');
+            $v->rule('lengthMax', 'user_name', 255)->message('darf maximal 255 Zeichen lang sein');
             $v->rule('regex', 'user_name', '/^[a-zA-Z0-9]+$/')->message('nur Buchstaben und Zahlen sind erlaubt');
             $v->rule('lengthMin', 'user_passwort', 4)->message('muss mindestens 4 Zeichen lang sein');
-            $v->rule('regex', 'user_passwort', '/^[a-zA-Z0-9_-ç%&()=öäüéàèÖÄÜÉÀÈ£$\/]+$/')->message('Buchstaben und Zahlen sind erlaubt und einige Sonderzeichen');
+            $v->rule('regex', 'user_passwort', '/^[a-zA-Z0-9._-ç%&()=öäüéàèÖÄÜÉÀÈ£$\/]+$/')->message('Buchstaben und Zahlen sind erlaubt und einige Sonderzeichen');
+            $v->rule('required', 'user_gruppe')->message('darf nicht leer sein');
             $v->rule('integer', 'user_gruppe')->message('muss eine Zahl sein');
             $v->rule('min', 'user_gruppe', 1)->message('muss grösser als 1 sein');
             $v->rule('lengthMin', 'user_RFID', 4)->message('muss mindestens 4 Zeichen lang sein');
@@ -98,39 +99,58 @@ class User {
             } else {
                 $post['user_id'] = intval($post['user_id']);
                 $post['user_gruppe'] = intval($post['user_gruppe']);
-                if ($post['user_id'] > 0)
-                    $data['user_id'] = intval($post['user_id']);
-                if ($post['user_pfad'] != '')
-                    $data['user_pfad'] = $post['user_pfad'];
-                if ($post['user_name'] != '')
-                    $data['user_name'] = $post['user_name'];
-                if ($post['user_gruppe'] > 0)
-                    $data['user_gruppe'] = intval($post['user_gruppe']);
-                if ($post['user_RFID'] != '')
-                    $data['user_RFID'] = $post['user_RFID'];
-
-                // Passwort verändert?
-                $checkPW = trim($post['user_passwort']);
-                $pw = $this->Model->getPasswort($data['user_id']);
-                $pwInDB = $pw[0]['user_passwort'];
-                if(is_string($pwInDB)){
-                    $pwInDB = trim($pwInDB);
-                }else{
-                    $pwInDB = '';
+                $save = true;
+                if ($this->Model->userExists($post['user_name'], $post['user_id'])) {
+                    $this->response['error'] = 'User mit gleichem Namen bereits vorhanden';
+                    $save = false;
+                } 
+                if ($save && $this->Model->pfadExists($post['user_pfad'], $post['user_id'])) {
+                    $this->response['error'] = 'Pfad mit gleichem Namen bereits vorhanden';
+                    $save = false;
+                } 
+                if ($save && $this->Model->rfidExists($post['user_RFID'], $post['user_id'])) {
+                    $this->response['error'] = 'RFID mit gleichem Namen bereits vorhanden';
+                    $save = false;
                 }
-                if (strstr($pwInDB, $checkPW)) {
-                    $data['user_passwort'] = $pwInDB;
-                } else {
-                    $data['user_passwort'] = sha1($checkPW);
+                if( $save){
+                    if ($post['user_id'] > 0)
+                        $data['user_id'] = intval($post['user_id']);
+                    if ($post['user_pfad'] != '')
+                        $data['user_pfad'] = $post['user_pfad'];
+                    if ($post['user_name'] != '')
+                        $data['user_name'] = $post['user_name'];
+                    if ($post['user_gruppe'] > 0)
+                        $data['user_gruppe'] = intval($post['user_gruppe']);
+                    if ($post['user_RFID'] != '')
+                        $data['user_RFID'] = $post['user_RFID'];
+                    // Passwort changed?
+                    $checkPW = trim($post['user_passwort']);
+                    $pw = $this->Model->getPasswort($data['user_id']);
+                    if (isset($pw[0]['user_passwort'])) {
+                        $pwInDB = trim($pw[0]['user_passwort']);
+                    } else {
+                        $pwInDB = '';
+                    }
+                    if (strstr($pwInDB, $checkPW)) {
+                        $data['user_passwort'] = $pwInDB;
+                    } else {
+                        $data['user_passwort'] = hash('sha512', $checkPW);
+                    }
+                    $this->response['formdata'] = $data;
+                    if ($post['user_id'] == 0) {
+                        if ($this->Model->insertUser($data)) {
+                            $this->response['success'] = 'User erfolgreich hinzugefügt';
+                        } else {
+                            $this->response['error'] = 'User nicht hinzugefügt';
+                        }
+                    } else {
+                        if ($this->Model->updateUser($data)) {
+                            $this->response['success'] = 'User erfolgreich geändert';
+                        } else {
+                            $this->response['error'] = 'User nicht geändert';
+                        }
+                    }
                 }
-                $this->response['formdata'] = $data;
-                if ($post['user_id'] == 0) {
-                    $this->Model->insertUser($data);
-                } else {
-                    $this->Model->updateUser($data);
-                }
-                $this->response['success'] = 'Validation erfolgreich';
-
                 $this->run();
             }
         }

@@ -18,12 +18,14 @@ abstract class Auth {
     public static function chkLogin(string $loginname, string $password): bool{
         try {
             $myDB = new Database();
-            $sql = "SELECT * FROM users LEFT JOIN groups ON users.user_gruppe = groups.group_id  WHERE user_name = :user_name AND user_passwort = :user_passwort";
+            $sql = "SELECT * FROM users LEFT JOIN groups ON users.user_gruppe = groups.group_id  WHERE user_active = 1 AND user_name = :user_name AND user_passwort = :user_passwort";
             $bind = array(
                 ':user_name' => $loginname,
                 ':user_passwort' => $password
             );
-            /** @var array<mixed> $result */
+            /** 
+             * @var array<mixed> $result 
+             * */
             $result = $myDB->getArray($sql, $bind);
             if (is_array($result) && count($result) == 1) {
                 Auth::SessionRegenerate();

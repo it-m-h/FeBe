@@ -23,9 +23,9 @@ CREATE TABLE IF NOT EXISTS users(
     FOREIGN KEY (user_gruppe) REFERENCES groups(group_id)
 );
 
-INSERT INTO users (user_pfad, user_name, user_passwort, user_gruppe) VALUES ('admin', 'admin', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', 1);
-INSERT INTO users (user_pfad, user_name, user_passwort, user_gruppe) VALUES ('user', 'user', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', 2);
-INSERT INTO users (user_pfad, user_name, user_passwort, user_gruppe) VALUES ('guest', 'guest', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', 3);
+INSERT INTO users (user_pfad, user_name, user_passwort, user_gruppe) VALUES ('admin', 'admin', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 1);
+INSERT INTO users (user_pfad, user_name, user_passwort, user_gruppe) VALUES ('user', 'user', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 2);
+INSERT INTO users (user_pfad, user_name, user_passwort, user_gruppe) VALUES ('guest', 'guest', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 3);
 
 CREATE TABLE IF NOT EXISTS settings (
 	settings_id	INTEGER PRIMARY KEY AUTOINCREMENT,

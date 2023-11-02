@@ -25,9 +25,26 @@ Route::add('/Account/Login', function () {
     echo $Sites->getResponse();
 }, ['get']);
 Route::add('/Account/check', function () {
+    if (empty($_POST['name']) || empty($_POST['password']) || strlen($_POST['name']) > 100 ||strlen($_POST['password']) > 255) {
+        header('Location: /Account/Login');
+    } else {
+        $loginname = strip_tags($_POST['name']);
+        $password = strip_tags($_POST['password']);
+        if (Auth::chkLogin($loginname, $password)) {
+            echo 1;
+        } else {
+            echo 0;
+        }
+    }
+}, ['post']);
+
+Route::add('/Account/check_old', function () {
     if (empty($_POST['name']) || empty($_POST['password'])) {
         header('Location: /Account/Login');
     }else{
+        //php - cdde verhindern im post
+
+
         $loginname = $_POST['name'];
         $password = sha1($_POST['password']);
         if(Auth::chkLogin($loginname, $password)){
