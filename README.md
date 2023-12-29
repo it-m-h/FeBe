@@ -25,6 +25,7 @@ composer update
 composer outdated
 composer update --with-all-dependencies
 composer update phpunit/phpunit
+composer dump-autoload
 ```
 
 ## GIT:
@@ -187,7 +188,7 @@ parameters:
 # GIT - TAG
 ```
 git tag 
-git tag -a v0.1.4 -m "Version 0.1.4"
-git push origin v0.1.4
+git tag -a v0.1.5 -m "Version 0.1.5"
+git push origin v0.1.5
 
 ```
