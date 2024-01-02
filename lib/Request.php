@@ -117,8 +117,13 @@ abstract class Request {
         }
 
         $apiResponse = curl_exec($ch);
+        // Check if the cURL request failed.
         if ($apiResponse === false) {
             throw new Exception(curl_error($ch), curl_errno($ch));
+        }
+        // Stellen Sie sicher, dass $apiResponse ein String ist
+        if (!is_string($apiResponse)) {
+            throw new Exception("Erwarteter String als Antwort, stattdessen erhalten: ".gettype($apiResponse));
         }
         $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
         $header = substr($apiResponse, 0, $header_size);
