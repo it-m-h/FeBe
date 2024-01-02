@@ -120,7 +120,6 @@ abstract class Request {
         if ($apiResponse === false) {
             throw new Exception(curl_error($ch), curl_errno($ch));
         }
-
         $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
         $header = substr($apiResponse, 0, $header_size);
         $body = substr($apiResponse, $header_size);

@@ -8,6 +8,20 @@ require BASEPATH.'vendor/autoload.php';
 // File in tests/UserTest.php
 class TestUser extends PHPUnit\Framework\TestCase {
 
+    public function testUserClass() {
+        $user = new \App\User\User();
+        $this->assertNotNull($user);
+        $this->assertInstanceOf('\App\User\User', $user);
+        // Überprüfen, ob Methoden existieren
+        $this->assertTrue(method_exists($user, 'getUser'));
+        $this->assertTrue(method_exists($user, 'getUsers'));
+        $this->assertTrue(method_exists($user, 'toggleUserStatus'));
+        $this->assertTrue(method_exists($user, 'Save'));
+        $this->assertTrue(method_exists($user, 'run'));
+        // Überprüfen, ob Objekteigenschaften existieren
+        $this->assertObjectHasProperty('response', $user);
+        $this->assertObjectHasProperty('Model', $user);
+    }
     // db check
     public function testTable() {
         $db = new \lib\Database();
