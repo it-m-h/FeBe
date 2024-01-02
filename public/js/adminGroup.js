@@ -1,44 +1,41 @@
 export function onEditButtonClick() {
-    $('#UserListe .edit').click(function () {
+    /*  .edit click */
+    $('#GroupListe .edit').click(function () {
         var id = $(this).parent().attr('data-id');
         $.ajax({
             type: "GET",
-            url: "/App/User/getUser/" + id,
+            url: "/App/Group/getGroup/" + id,
             dataType: 'json',
             success: function (response) {
                 if (response['error']) {
                     M.toast({ html: response['error'], classes: 'red' });
                 } else {
-                    $('#user_id').val(response['user_id']);
-                    $('#user_id').addClass('valid');
-                    $('#user_pfad').val(response['user_pfad']);
-                    $('#user_pfad').addClass('valid');
-                    $('#user_name').val(response['user_name']);
-                    $('#user_name').addClass('valid');
-                    $('#user_passwort').val(response['user_passwort']);
-                    $('#user_passwort').addClass('valid');
-                    $('#user_gruppe').val(response['user_gruppe']);
-                    $('#user_gruppe').addClass('valid');
-                    $('#user_RFID').val(response['user_RFID']);
-                    $('#user_RFID').addClass('valid');
+                    $('#group_id').val(response['group_id']);
+                    $('#group_id').addClass('valid');
+                    $('#group_name').val(response['group_name']);
+                    $('#group_name').addClass('valid');
+                    $('#group_rights').val(response['group_rights']);
+                    $('#group_rights').addClass('valid');
                     M.toast({ html: 'Daten geladen', classes: 'grey darken-2' });
                     M.updateTextFields();
                     $('select').formSelect();
+
+
                 }
             }
         });
     });
 }
 export function onStatusButtonClick() {
-    $('#UserListe .status').click(function () {
-        let abfrage = confirm("Benutzer aktivieren/deaktivieren?");
+    $('#GroupListe .status').click(function () {
+        let abfrage = confirm("Gruppe aktivieren/deaktivieren?");
         if (abfrage == false) {
             return false;
         } else {
             var id = $(this).parent().attr('data-id');
             $.ajax({
                 type: "GET",
-                url: "/App/User/toggleUserStatus/" + id,
+                url: "/App/Group/toggleGroupStatus/" + id,
                 dataType: 'json',
                 success: function (response) {
                     if (response['error']) {
@@ -54,10 +51,9 @@ export function onStatusButtonClick() {
         }
     });
 }
-
 export function onClearButtonClick() {
-    $('#UserForm #clear').click(function () {
-        $('#UserForm').find('input').each(function () {
+    $('#GroupListe #clear').click(function () {
+        $('#GroupForm').find('input').each(function () {
             var value = $(this).attr('value');
             $(this).val(value);
             $(this).removeClass('valid');
@@ -67,11 +63,10 @@ export function onClearButtonClick() {
         M.toast({ html: 'Formular geleert', classes: 'grey darken-2' });
     });
 }
-
 export function onFormSubmit() {
     $('form').submit(function (e) {
         e.preventDefault();
-        var form = $('#UserForm');
+        var form = $('#GroupForm');
         var url = form.attr('action');
         var data = form.serialize();
         $.ajax({
@@ -80,9 +75,8 @@ export function onFormSubmit() {
             data: data,
             dataType: 'json',
             success: function (response) {
-                console.log(response);
                 if (response['success']) {
-                    $('#UserForm').find('input').each(function () {
+                    $('#GroupForm').find('input').each(function () {
                         var value = $(this).attr('value');
                         $(this).val(value);
                     });
@@ -92,16 +86,12 @@ export function onFormSubmit() {
                     }, 700);
 
                 } else if (response['error']) {
-                    console.log(response);
-                    if (!Array.isArray(response['error'])) {
-                        M.toast({ html: response['error'], classes: 'red' });
-                    } else {
-                        for (let key in response.data) {
-                            let value = response.data[key];
-                            M.toast({ html: key + ': ' + value, classes: 'red' });
-                        }
+                    for (let key in response.data) {
+                        let value = response.data[key];
+                        M.toast({ html: key + ': ' + value, classes: 'red' });
                     }
                 }
+
             }
         });
     });
