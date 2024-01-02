@@ -12,6 +12,12 @@ Route::add('/', function () {
     echo $Sites->getResponse();
 }, ['get']);
 
+
+Route::add('/testRoute', function () {
+    echo 'testRoute';
+}, ['get']);
+
+
 // -----------------------------------------------
 // Account Login & Logout
 // -----------------------------------------------

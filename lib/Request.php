@@ -89,4 +89,51 @@ abstract class Request {
             exit;
         }
     }
+    
+    /**
+     * request
+     *
+     * @param  string $url
+     * @param  string $method
+     * @param  array $data
+     * @return array
+     */
+    public static function OpenURL(string $url, string $method = 'GET', array $data = array()) :array {
+
+        $_SERVER['REQUEST_METHOD'] = $method;
+        $apiURL = "http://FeBe.local/".$url;
+        $ch = curl_init($apiURL);
+        if ($ch === false) {
+            throw new Exception("Failed to initialize cURL session.");
+        }
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HEADER, true);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'FeBe-PHPUnit-Testing/1.0');
+
+        // Prüfe, ob die Methode POST ist und übergebe die Daten
+        if ($method === 'POST') {
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        }
+
+        $apiResponse = curl_exec($ch);
+        if ($apiResponse === false) {
+            throw new Exception(curl_error($ch), curl_errno($ch));
+        }
+
+        $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+        $header = substr($apiResponse, 0, $header_size);
+        $body = substr($apiResponse, $header_size);
+        $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        curl_close($ch);
+        return array(
+            'header_size' => $header_size,
+            'header' => $header,
+            'body' => $body,
+            'status_code' => $status_code
+        );
+    }
+
+
 }
