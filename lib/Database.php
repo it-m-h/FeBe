@@ -16,11 +16,22 @@ class Database {
      *
      * @param  string $method
      * @param  string $param
+     * @param  string $database
      * @return void
      */
-    public function __construct(string $method = '', string $param = '') {
-        $this->checkDBSqlite3(BASEPATH.'data/FeBe.sqlite3');
-        $this->db = new \PDO('sqlite:'.BASEPATH.'data/FeBe.sqlite3');
+    public function __construct(string $method = '', string $param = '', string $database = '') {
+        if ($database =='' || $database == null) {
+            $database = DB_FILE;
+            ($_SESSION['DB'] != $database) ? $_SESSION['DB'] = $database : null;
+            $this->checkDBSqlite3($database);
+        }elseif(isset($_SESSION['DB'])) {
+            $database = $_SESSION['DB'];
+        }else{
+            $database = BASEPATH.'data'.DS.$database;
+            ($_SESSION['DB'] != $database) ? $_SESSION['DB'] = $database : null;
+            $this->checkDBSqlite3($database);
+        }
+        $this->db = new \PDO('sqlite:'.$database);
         //$this->db = new \PDO('mysql:host=localhost;dbname=FeBe', 'root', '');
         if ($method != '') {
             $this->$method($param);
@@ -35,7 +46,7 @@ class Database {
      */
     public function checkDBSqlite3(string $file) {
         if (!file_exists($file)) {
-            $sql = file_get_contents(BASEPATH.'data/SQLITE3.sql');
+            $sql = file_get_contents(BASEPATH.'data'.DS.'SQLITE3.sql');
             if ($sql === false) {
                 throw new \RuntimeException("Die SQL-Datei konnte nicht gelesen werden.");
             }

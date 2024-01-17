@@ -25,6 +25,7 @@ abstract class Request {
     public static function client(): array {
         if (!isset($_SESSION['client'])) {
             $info = array();
+            $info['session_id'] = session_id();
             $info['ip'] = $_SERVER['REMOTE_ADDR'];
             $info['host'] = gethostbyaddr($_SERVER['REMOTE_ADDR']);
             $info['browser'] = $_SERVER['HTTP_USER_AGENT'];
@@ -37,6 +38,7 @@ abstract class Request {
             $info['uri'] = $_SERVER['REQUEST_URI'];
             $info['query'] = $_SERVER['QUERY_STRING'];
             $info['time'] = $_SERVER['REQUEST_TIME'];
+            $info['date'] = date('d.m.Y H:i:s', $info['time']);
             $info['time_local'] = $_SERVER['REQUEST_TIME_FLOAT'];
             $info['time_zone'] = date_default_timezone_get();
             if ($info['ip'] == '::1' or $info['ip'] == '127.0.0.1' or $info['ip'] == 'localhost') {
@@ -82,8 +84,16 @@ abstract class Request {
      * @return void
      */
     public static function checkCountry():void {
-        $country = $_SESSION['client']['reverse_lookup']['country_code'];
-        $allow = $_SESSION['settings']['CODE'];
+        if (!isset($_SESSION['client']['reverse_lookup']['country_code'])) {
+            $country = 'CH';
+        }else{
+            $country = $_SESSION['client']['reverse_lookup']['country_code'];
+        }
+        if (!isset($_SESSION['settings']['CODE'])) {
+            $allow = 'CH';
+        }else{
+            $allow = $_SESSION['settings']['CODE'];
+        }
         if (stripos($allow, $country) == false) {
             Response::error(404);
             exit;
@@ -101,7 +111,11 @@ abstract class Request {
     public static function OpenURL(string $url, string $method = 'GET', array $data = array()) :array {
 
         $_SERVER['REQUEST_METHOD'] = $method;
-        $apiURL = "http://FeBe.local/".$url;
+        if(defined('DOMAIN')){
+            $apiURL = DOMAIN.DIRECTORY_SEPARATOR.$url;
+        }else{
+            $apiURL = $url;
+        }
         $ch = curl_init($apiURL);
         if ($ch === false) {
             throw new Exception("Failed to initialize cURL session.");

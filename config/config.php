@@ -29,6 +29,13 @@ setlocale(LC_TIME, 'de_CH.utf8', 'de_CH', 'deu_ch', 'Swiss');
 define('DURATION', 600);
 
 // ---------------------------------------------------------------
+// Applikation Settings
+// ---------------------------------------------------------------
+//define('DOMAIN', 'http://FeBe.local');
+
+//define('DOMAIN', $_SERVER['HTTP_HOST']);
+
+// ---------------------------------------------------------------
 // CONFIG - FILES & FOLDERS (coming soon)
 // ---------------------------------------------------------------
 // define('FOLDER', 'public/Files');
@@ -38,7 +45,8 @@ define('DURATION', 600);
 // CONFIG - DATABASE (comming soon)
 // ---------------------------------------------------------------
 // SQLITE3 - DATABASE   
-// define('DB_FILE', BASEPATH.'data/FeBe.sqlite3');
+define('DB_FILE', BASEPATH.'data'.DS.'FeBe.sqlite3');
+
 
 // mysql - DATABASE 
 /* 

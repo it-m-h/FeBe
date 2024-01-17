@@ -46,6 +46,13 @@ class TestLogin extends PHPUnit\Framework\TestCase {
         $pass = hash('sha512', '1234');
         $req = Request::OpenURL('Account/check', 'POST', array('name' => 'admin', 'password' => $pass));
         $return = intval($req['body']);
+
+        $body = '{ "success" : true}';
+        // text in json
+        $json = json_decode($body);
+        // Überprüfen, ob $json->success true ist
+        $this->assertTrue($json->success);
+
         // Überprüfen, ob $return numerisch ist
         $this->assertIsNumeric($return);
         // Überprüfen, ob $return gleich 1 ist

@@ -14,7 +14,8 @@ Route::add('/', function () {
 
 
 Route::add('/testRoute', function () {
-    echo 'testRoute';
+    echo 'testRoute<br>';
+    echo DOMAIN;
 }, ['get']);
 
 

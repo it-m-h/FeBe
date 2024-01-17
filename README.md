@@ -98,12 +98,24 @@ Browser: http://Page1.local/
 ## FeBe vHost in LAP (LINUX - Apache - PHP)
 ```
 sudo -i
+sudo apt update
+sudo apt upgrade
 
+apt install curl
 apt install apache2
 apt install php
 apt install php-pdo
 apt install php-zip
+apt install php-curl
+apt install php-xml
+apt install php-cli 
+apt install unzip
+
+nano /etc/php/8.1/apache2/php.ini
+-- extension=curl aktivieren
+
 a2enmod rewrite
+service apache2 reload
 service apache2 restart
 
 cd /var/www
@@ -166,6 +178,7 @@ php vendor/bin/phpunit tests/TestUser.php --colors
 # PHPstan
 ```
 composer require --dev phpstan/phpstan
+composer remove --dev phpstan/phpstan
 
 cd C:\xampp\htdocs\GIT_Project\it-m-h\FeBe
 

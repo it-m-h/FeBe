@@ -7,20 +7,28 @@ ini_set('session.use_strict_mode', 1);
 // ---------------------------------------------------------------
 // DEFINE constant Variables & LOAD Config
 // ---------------------------------------------------------------
+define('DOMAIN', $_SERVER['HTTP_HOST']);
 define('DS', DIRECTORY_SEPARATOR);
+define('NEWLINE', "\r\n");
+define('DELIMITER', ";"); // tab = \t
 define('BASEPATH', str_replace('public', '', $_SERVER['DOCUMENT_ROOT']));
-require BASEPATH.'config/config.php';
+require BASEPATH.'config'.DS.'config.php';
 
 // ---------------------------------------------------------------
 // Composer - PSR-4 - Autoloader
 // ---------------------------------------------------------------
-require BASEPATH.'vendor/autoload.php';
+require BASEPATH.'vendor'.DS.'autoload.php';
 
 // ---------------------------------------------------------------
 // Session - Start
 // ---------------------------------------------------------------
 \lib\Auth::SessionStart();
 \lib\Request::client();
+
+// ---------------------------------------------------------------
+// Domain - initial 
+// ---------------------------------------------------------------
+lib\Domain::initDomain();
 
 // ---------------------------------------------------------------
 // CONFIGS 
@@ -42,6 +50,17 @@ if(!isset($_SESSION['settings'])){
 require BASEPATH.DS."config".DS.'router.php';
 
 // ---------------------------------------------------------------
+// Cookie - initial 
+// ---------------------------------------------------------------
+\lib\Cookie::initCookie();
+//\lib\Cookie::writeDB('cookie_name', $_COOKIE['FeBe']);
+
+/* $text = json_encode($_SESSION);
+echo $text;
+\lib\Cookie::writeDB('session_id', session_id());
+\lib\Cookie::writeDB('value', ''); */
+
+// ---------------------------------------------------------------
 // Run the router
 // ---------------------------------------------------------------
 use Steampixel\Route;
@@ -56,3 +75,4 @@ if(isset($_SESSION['settings']['RESPONSECLEAR']) && $_SESSION['settings']['RESPO
 }else{
     Route::run('/');
 }
+

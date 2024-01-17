@@ -73,3 +73,42 @@ INSERT INTO settings (settings_name,settings_value,settings_bemerkung,settings_g
  ('LOGINWITHCALC','0','','login'),
  ('LOGINWITH2FA','0','','login'),
  ('TWOFACTOR_DOMAIN','it-master.ch','','login');
+
+ CREATE TABLE IF NOT EXISTS domain(
+    domain_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    domain_name TEXT(255) NOT NULL,
+    domain_database TEXT(255) NOT NULL,
+    domain_active INT(1) NOT NULL DEFAULT 1
+);
+
+INSERT INTO domain (domain_name, domain_database) VALUES 
+ ('FeBe.local', 'FeBe.sqlite3');
+
+
+ CREATE TABLE IF NOT EXISTS "cookie" (
+    "id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+    "created"	DATETIME DEFAULT (datetime('now', 'localtime')),
+    "expires"	DATETIME,
+    "cookie_name"	TEXT,
+    "value"	TEXT,
+    "session_id"	TEXT,
+    "ip"	TEXT,
+    "host"	TEXT,
+    "browser"	TEXT,
+    "language"	TEXT,
+    "time"	TEXT,
+    "date"	TEXT,
+    "time_zone"	TEXT,
+    "callingCode"	TEXT,
+    "countryCapital"	TEXT,
+    "country_code"	TEXT,
+    "country_name"	TEXT,
+    "aktiv"	INT DEFAULT 1
+)
+
+
+-- View mit allen usern und Gruppen
+CREATE VIEW IF NOT EXISTS user_view AS
+SELECT *
+FROM users
+INNER JOIN groups ON users.user_gruppe = groups.group_id;
