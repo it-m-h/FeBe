@@ -22,13 +22,9 @@ class Database {
     public function __construct(string $method = '', string $param = '', string $database = '') {
         if ($database =='' || $database == null) {
             $database = DB_FILE;
-            ($_SESSION['DB'] != $database) ? $_SESSION['DB'] = $database : null;
             $this->checkDBSqlite3($database);
-        }elseif(isset($_SESSION['DB'])) {
-            $database = $_SESSION['DB'];
         }else{
             $database = BASEPATH.'data'.DS.$database;
-            ($_SESSION['DB'] != $database) ? $_SESSION['DB'] = $database : null;
             $this->checkDBSqlite3($database);
         }
         $this->db = new \PDO('sqlite:'.$database);

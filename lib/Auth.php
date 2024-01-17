@@ -121,7 +121,7 @@ abstract class Auth {
      * @return void
      */
     public static function SessionStart() {
-        session_start();
+        
         if(!defined('DURATION')){
             define('DURATION', 600);
         }

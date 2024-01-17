@@ -12,12 +12,13 @@ Route::add('/', function () {
     echo $Sites->getResponse();
 }, ['get']);
 
-
-Route::add('/testRoute', function () {
-    echo 'testRoute<br>';
-    echo DOMAIN;
+Route::add('/welcome', function () {
+    echo 'Welcome :)';
 }, ['get']);
 
+Route::add('/phpinfo', function () {
+    phpinfo();
+}, ['get']);
 
 // -----------------------------------------------
 // Account Login & Logout

@@ -40,13 +40,23 @@ define('DURATION', 600);
 // ---------------------------------------------------------------
 // define('FOLDER', 'public/Files');
 
-
 // ---------------------------------------------------------------
-// CONFIG - DATABASE (comming soon)
+// CONFIG - DATABASE (SQLITE3)
 // ---------------------------------------------------------------
-// SQLITE3 - DATABASE   
-define('DB_FILE', BASEPATH.'data'.DS.'FeBe.sqlite3');
-
+switch ($_SERVER['HTTP_HOST']) {
+    case 'localhost':
+        define('DB_FILE', BASEPATH.'data'.DS.'FeBe.sqlite3');
+        break;
+    case '127.0.0.1':
+        define('DB_FILE', BASEPATH.'data'.DS.'FeBe.sqlite3');
+        break;
+    case 'FeBe.local':
+        define('DB_FILE', BASEPATH.'data'.DS.'FeBe.sqlite3');
+        break;
+    default:
+        define('DB_FILE', BASEPATH.'data'.DS.'FeBe.sqlite3');
+        break;
+}
 
 // mysql - DATABASE 
 /* 

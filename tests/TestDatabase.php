@@ -4,7 +4,7 @@ declare(strict_types=1);
 define('DS', DIRECTORY_SEPARATOR);
 define('BASEPATH', str_replace('public', '', $_SERVER['DOCUMENT_ROOT']));
 require BASEPATH.'vendor/autoload.php';
-define('DB_FILE', BASEPATH.'data/FeBe.sqlite3');
+define('DB_FILE', BASEPATH.'data'.DS.'FeBe.sqlite3');
 
 class TestDatabase extends PHPUnit\Framework\TestCase {
 
@@ -22,7 +22,7 @@ class TestDatabase extends PHPUnit\Framework\TestCase {
     } */
     public function testDatabaseConnectionWithKurs() {
         if($this->DatenbankSQLITE){
-            $body = new \PDO('sqlite:'.DB_FILE);
+            $body = new \PDO('sqlite:'.$_SESSION['DB']);
             $this->assertNotNull($body);
             $this->assertIsObject($body);
         }elseif($this->DatenbankMYSQL){

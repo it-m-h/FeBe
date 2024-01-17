@@ -74,17 +74,6 @@ INSERT INTO settings (settings_name,settings_value,settings_bemerkung,settings_g
  ('LOGINWITH2FA','0','','login'),
  ('TWOFACTOR_DOMAIN','it-master.ch','','login');
 
- CREATE TABLE IF NOT EXISTS domain(
-    domain_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    domain_name TEXT(255) NOT NULL,
-    domain_database TEXT(255) NOT NULL,
-    domain_active INT(1) NOT NULL DEFAULT 1
-);
-
-INSERT INTO domain (domain_name, domain_database) VALUES 
- ('FeBe.local', 'FeBe.sqlite3');
-
-
  CREATE TABLE IF NOT EXISTS "cookie" (
     "id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
     "created"	DATETIME DEFAULT (datetime('now', 'localtime')),
@@ -104,7 +93,7 @@ INSERT INTO domain (domain_name, domain_database) VALUES
     "country_code"	TEXT,
     "country_name"	TEXT,
     "aktiv"	INT DEFAULT 1
-)
+);
 
 
 -- View mit allen usern und Gruppen

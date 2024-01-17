@@ -24,14 +24,22 @@ abstract class Cookie {
         return false;
     }
     public static function checkVisitor() {
+        $uniqueValue = '';
+        if(!isset($_COOKIE['FeBe'])){
+            $uniqueValue = uniqid('u_', true) .'_' . time().'_'.microtime(true);
+            setcookie('FeBe', $uniqueValue, time() + (86400 * 300), "/");
+        }else{
+            $uniqueValue = $_COOKIE['FeBe'];
+        }
+
         $db = new Database();
-        $sql = "SELECT * FROM cookie WHERE cookie_name = '".$_COOKIE['FeBe']."'";
+        $sql = "SELECT * FROM cookie WHERE cookie_name = '".$uniqueValue."'";
         $result = $db->getArray($sql);
         //echo '<pre>';
         //print_r($result);
         //echo '</pre>';
         if (count($result) == 0) {
-            $sql = "INSERT INTO cookie ('cookie_name') VALUES ('".$_COOKIE['FeBe']."')";
+            $sql = "INSERT INTO cookie ('cookie_name') VALUES ('".$uniqueValue."')";
             $db->run($sql);
             Cookie::writeDB('session_id', $_SESSION['client']['session_id']);
             Cookie::writeDB('ip', $_SESSION['client']['ip']);
@@ -53,6 +61,7 @@ abstract class Cookie {
             //echo $sql;
         }
         $db = null;
+        
     }
 
     public static function writeDB(string $field, $value) {
